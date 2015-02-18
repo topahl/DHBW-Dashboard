@@ -4,7 +4,9 @@ $( document ).ready( setup );
 
 function setup(){
   loadPlan();
-  $("#update").on("click",update)
+  $("#update").on("click",update);
+  $("#settings").on("click",settings);
+  $("#close").on("click",close);
 }
 
 function loadPlan(){
@@ -25,11 +27,16 @@ function parse(html,dayoffset){
   return result;
 }
 
-
+function settings(){
+  $("#settingslayer").css("display","block");
+}
 
 function update(){
   $("#heute").text("");
   $("#morgen").text("");
-
   loadPlan();
+}
+
+function close(){
+  $("#settingslayer").css("display","none");
 }

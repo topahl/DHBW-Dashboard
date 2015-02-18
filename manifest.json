@@ -10,7 +10,6 @@
   },
   "icons": { "16": "calculator-16.png", "128": "calculator-128.png" },
   "permissions": [
-    "http://vorlesungsplan.dhbw-mannheim.de/index.php",
-    "http://app.imensa.de/"
+    "http://vorlesungsplan.dhbw-mannheim.de/index.php"
   ]
 }
