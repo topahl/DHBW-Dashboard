@@ -1,4 +1,11 @@
-$( document ).ready( loadPlan );
+$( document ).ready( setup );
+
+
+
+function setup(){
+  loadPlan();
+  $("#update").on("click",update)
+}
 
 function loadPlan(){
   var jqxhr = $.get( "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&gid=3067001&uid=4430001", function() {
@@ -16,4 +23,13 @@ function parse(html,dayoffset){
   var result
   result =  $(html).find("[data-role='listview']")[time.getDay()- 1 + dayoffset ];
   return result;
+}
+
+
+
+function update(){
+  $("#heute").text("");
+  $("#morgen").text("");
+
+  loadPlan();
 }
