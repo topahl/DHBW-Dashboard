@@ -6,11 +6,14 @@ function loadPlan(){
     .done(function(data) {
 
 
-      $("#plan").append( parse( data ) );
+      $("#heute").append( parse( data,0 ) );
+      $("#morgen").append( parse( data,1 ) );
 
     });
 }
-function parse(html){
+function parse(html,dayoffset){
   var time = new Date()
-  return $(html).find("[data-role='listview']")[time.getDay()-1];
+  var result
+  result =  $(html).find("[data-role='listview']")[time.getDay()- 1 + dayoffset ];
+  return result;
 }
