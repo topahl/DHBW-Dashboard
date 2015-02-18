@@ -1,0 +1,12 @@
+ul {
+    list-style-type:none;
+		padding:0px;
+}
+li {
+	background-color: #b0c4de;
+	padding: 10px;
+}
+li[data-role="list-divider"] {
+	background-color: #b0c400;
+	padding: 20px;
+}
