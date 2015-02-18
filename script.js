@@ -11,5 +11,6 @@ function loadPlan(){
     });
 }
 function parse(html){
-  return $(html).find("[data-role='listview']")[1];
+  var time = new Date()
+  return $(html).find("[data-role='listview']")[time.getDay()-1];
 }
