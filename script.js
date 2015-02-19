@@ -23,10 +23,10 @@ function loadPlan(){
     .done(function(data) {
 
 
-      $("#heute").append( parse( data,0 ) );
-      $("#morgen").append( parse( data,1 ) );
+      $("#heute").html( parse( data,0 ) );
+      $("#morgen").html( parse( data,1 ) );
       var kursname = $(data).find(".header-txt-c > h1 > span").text();
-      $("#kursname").text(kursname);
+      $(".kursname").text( (kursname.length > 0) ? kursname : "Kein Kurs eingetragen");
 
   });
 
@@ -43,8 +43,8 @@ function settings(){
 }
 
 function update(){
-  $("#heute").text("");
-  $("#morgen").text("");
+  $("#heute").html("");
+  $("#morgen").html("");
   loadPlan();
 }
 
@@ -54,6 +54,12 @@ function close(){
 
 function changeKursID(){
   var id = $("#kursid").val();
+
+	if(id.substring(0,4) == "http") {
+		id = id.split("uid=")[1];
+		$("#kursid").val(id);
+	}
+	
   chrome.storage.sync.set({"kurs": id})
   update();
 }
