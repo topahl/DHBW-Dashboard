@@ -34,20 +34,19 @@ ul .cal-time {
 }
 
 .taskbar {
-	position:absolute;
-	right:1em;
-	top:1em;
+	display: flex;
+    justify-content: space-between;
 }
 
-.taskbar > svg {
+.taskbar svg {
 	opacity: 0.4;
 }
 
-.taskbar > svg:hover {
+.taskbar svg:hover {
 	opacity: 0.8;
 }
 
-.taskbar > svg:active {
+.taskbar svg:active {
 	opacity: 1;
 }
 

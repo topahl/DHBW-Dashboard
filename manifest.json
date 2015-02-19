@@ -1,5 +1,5 @@
 {
-  "name": "DHBWonChrome",
+  "name": "DHBW Dashboard",
   "description": "DHBW Information",
   "version": "0.1",
   "manifest_version": 2,
@@ -8,7 +8,7 @@
       "scripts": ["background.js"]
     }
   },
-  "icons": { "16": "calculator-16.png", "128": "calculator-128.png" },
+  "icons": { "16": "dhbw-16.png", "128": "dhbw-128.png" },
   "permissions": [
     "http://vorlesungsplan.dhbw-mannheim.de/index.php"
   ]
