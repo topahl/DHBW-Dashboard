@@ -7,6 +7,7 @@ function setup(){
   $("#update").on("click",update);
   $("#settings").on("click",settings);
   $("#close").on("click",close);
+  $("#mensa").on("click",mensa);
 }
 
 function loadPlan(){
@@ -28,7 +29,7 @@ function parse(html,dayoffset){
 }
 
 function settings(){
-  $("#settingslayer").css("display","block");
+  $("#settingslayer").fadeIn();
 }
 
 function update(){
@@ -38,5 +39,9 @@ function update(){
 }
 
 function close(){
-  $("#settingslayer").css("display","none");
+  $("#settingslayer").fadeOut();
+}
+
+function mensa(){
+    console.log("https://www.stw-ma.de/Essen%20_%20Trinken/Men%C3%BCpl%C3%A4ne/Mensaria%20Metropol-date-2015_02_16-pdfView-1.html");
 }
