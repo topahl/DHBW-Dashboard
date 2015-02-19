@@ -6,6 +6,7 @@ function setup(){
   $("#update").on("click",update);
   $("#settings").on("click",settings);
   $("#close").on("click",close);
+  $("#mensa").on("click",mensa);
   chrome.storage.sync.get("kurs", function (obj) {
     $("#kursid").val(obj.kurs);
     loadPlan();
@@ -17,8 +18,7 @@ function setup(){
 function loadPlan(){
   var uid = $("#kursid").val();
   var url = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+uid;
-  console.log(url);
-  $.get( "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+uid, function() {
+  $.get( url, function() {
   })
     .done(function(data) {
 
@@ -39,7 +39,7 @@ function parse(html,dayoffset){
 }
 
 function settings(){
-  $("#settingslayer").css("display","block");
+  $("#settingslayer").fadeIn();
 }
 
 function update(){
@@ -49,7 +49,7 @@ function update(){
 }
 
 function close(){
-  $("#settingslayer").css("display","none");
+  $("#settingslayer").fadeOut();
 }
 
 function changeKursID(){
@@ -61,4 +61,8 @@ function changeKursID(){
 function loadKursID(data){
   console.log(data);
   return data;
+}
+
+function mensa(){
+    console.log("https://www.stw-ma.de/Essen%20_%20Trinken/Men%C3%BCpl%C3%A4ne/Mensaria%20Metropol-date-2015_02_16-pdfView-1.html");
 }

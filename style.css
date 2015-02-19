@@ -6,6 +6,13 @@ body, html {
     color: #343434;
 }
 
+h3 {
+    margin: 1rem;
+    color: #9e9e9e;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -34,37 +41,29 @@ ul .cal-time {
 }
 
 .taskbar {
-	position:absolute;
-	right:1em;
-	top:1em;
+	display: flex;
+	justify-content: space-between;
 }
 
-.taskbar > svg {
+.taskbar svg {
 	opacity: 0.4;
 }
-
-.taskbar > svg:hover {
+.taskbar svg:hover {
 	opacity: 0.8;
 }
-
-.taskbar > svg:active {
+.taskbar svg:active {
 	opacity: 1;
 }
 
-#settingslayer{
-	position:absolute;
-	top:0px;
-	left:0px;
+#settingslayer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	height: 100%;
+	width: 100%;
 	background: #eee;
-	height:100%;
-	width:100%;
-	z-index:2;
-	display:none
+	z-index: 2;
 }
 
-h3 {
-    margin: 1rem;
-    color: #9e9e9e;
-    font-size: 1.2rem;
-    font-weight: 300;
-}
+
