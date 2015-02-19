@@ -39,15 +39,15 @@ ul .cal-time {
 	top:1em;
 }
 
-.taskbar > img {
+.taskbar > svg {
 	opacity: 0.4;
 }
 
-.taskbar > img:hover {
+.taskbar > svg:hover {
 	opacity: 0.8;
 }
 
-.taskbar > img:active {
+.taskbar > svg:active {
 	opacity: 1;
 }
 
@@ -63,7 +63,7 @@ ul .cal-time {
 }
 
 h3 {
-    margin: .5em 1rem;
+    margin: 1rem;
     color: #9e9e9e;
     font-size: 1.2rem;
     font-weight: 300;
