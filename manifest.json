@@ -11,7 +11,7 @@
   "icons": { "16": "dhbw-16.png", "128": "dhbw-128.png" },
   "permissions": [
     "http://vorlesungsplan.dhbw-mannheim.de/index.php",
-    "https://api.import.io",
+    "https://api.import.io/*",
     "storage"
   ]
 }
