@@ -1,3 +1,8 @@
+
+/**
+ * @Section Basics
+ */
+
 body, html {
     padding: 0;
     margin: 0;
@@ -20,7 +25,7 @@ ul {
 }
 li {
 	padding: 1rem;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid #e0e0e0;
     background-color: #fff;
 }
 li[data-role="list-divider"] {
@@ -29,11 +34,72 @@ li[data-role="list-divider"] {
     font-weight: 700;
 }
 
-.content-box {
+
+/**
+ * @Section Forms
+ */
+
+::-webkit-input-placeholder,
+::-moz-placeholder,
+::-ms-input-placeholder {
+	color: #e0e0e0;
+}
+
+.form-box {
+	margin: 1rem 0 .5rem;
+}
+
+.swap-order {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+label, .label {
+	display: block;
+	font-size: .75rem;
+	color: #9e9e9e;
+	transition: color .4s ease-out 0s;
+}
+input[value=""] + label {
+	opacity: 0;
+}
+input:focus + label {
+	color: #f44336;
+}
+
+input, .input {
+	display: block;
+	width: 100%;
+	padding: .5em 0;
+	margin: 0 0 8px;
+	border: 1px solid #e0e0e0;
+	border-width: 0 0 1px;
+	outline: none;
+	font-size: 1rem;
+	transition: border .4s ease-out 0s, margin-bottom .4s ease-out 0s;
+}
+.input {
+	border: 0;
+}
+input:focus {
+	margin-bottom: 7px;
+	border-bottom: 2px solid #f44336;
+}
+
+
+
+/**
+ * @Section Custom Layouts
+ */
+
+.content-box, .list-box {
     margin: 1rem;
     padding: 0;
     background: #fff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.12);
+}
+.content-box {
+	padding: 1rem;
 }
 
 ul .cal-time {
@@ -45,9 +111,9 @@ ul .cal-time {
 	justify-content: space-between;
   height:1em;
 }
-
 .taskbar svg {
 	opacity: 0.4;
+	transition: opacity .2s ease-out 0s;
 }
 .taskbar svg:hover {
 	opacity: 0.8;
