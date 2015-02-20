@@ -43,6 +43,7 @@ ul .cal-time {
 .taskbar {
 	display: flex;
 	justify-content: space-between;
+  height:1em;
 }
 
 .taskbar svg {
@@ -55,7 +56,7 @@ ul .cal-time {
 	opacity: 1;
 }
 
-#settingslayer {
+#settingslayer, #mensalayer{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -65,5 +66,3 @@ ul .cal-time {
 	background: #eee;
 	z-index: 2;
 }
-
-
