@@ -18,6 +18,16 @@ h3 {
     font-weight: 300;
 }
 
+a {
+	text-decoration: none;
+	color: #2196f3;
+	background-color: transparent;
+	transition: color .4s ease-out 0s, background-color .4s ease-out 0s;
+}
+a:hover {
+	color: #1565c0;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -76,7 +86,7 @@ input, .input {
 	border-width: 0 0 1px;
 	outline: none;
 	font-size: 1rem;
-	transition: border .4s ease-out 0s, margin-bottom .4s ease-out 0s;
+	transition: border-color .4s linear 0s;
 }
 .input {
 	border: 0;
@@ -102,6 +112,15 @@ input:focus {
 	padding: 1rem;
 }
 
+a.item-link {
+	display: block;
+	margin: -1rem;
+	padding: 1rem;
+}
+a.item-link:hover {
+	background-color: #f5f5f5;
+}
+
 ul .cal-time {
     font-weight: 700;
 }
@@ -111,16 +130,42 @@ ul .cal-time {
 	justify-content: space-between;
   height:1em;
 }
-.taskbar svg {
-	opacity: 0.4;
-	transition: opacity .2s ease-out 0s;
+.taskbar svg path {
+	fill: #999999;
+	transition: fill .2s ease-out 0s;
 }
-.taskbar svg:hover {
-	opacity: 0.8;
+.taskbar svg:hover path {
+	fill: #666666;
 }
-.taskbar svg:active {
-	opacity: 1;
+.taskbar svg:active path {
+	fill: #000000;
 }
+
+.item-icon {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+li.item-icon {
+	padding: 0;
+}
+li .item-icon {
+	width: calc(100% + 2rem);
+	margin: -1rem;
+}
+.item-icon svg {
+	margin-right: 1rem;
+	padding: 1rem;
+	background-color: #f5f5f5;
+}
+.item-icon a, .item-icon span {
+	display: block;
+	padding: 1rem;
+}
+a.item-icon:hover {
+	background-color: #f5f5f5;
+}
+
 
 #settingslayer, #mensalayer{
 	position: absolute;
