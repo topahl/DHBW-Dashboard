@@ -19,12 +19,11 @@ function setup(){
 function loadPlan(){
   var uid = $("#kursid").val();
   var url = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+uid;
-  var mensaurl = "https://api.import.io/store/data/151380a2-c1e8-44be-9bec-d18630de416c/_query?input/webpage/url=https%3A%2F%2Fwww.stw-ma.de%2FEssen%2520_%2520Trinken%2FMen%25C3%25BCpl%25C3%25A4ne%2FMensaria%2520Metropol-date-2015_02_16-pdfView-1.html&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey=g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
+  var mensaurl = "https://api.import.io/store/data/ec5a49ed-dcdf-4f60-951b-6935759bc071/_query?input/webpage/url=https%3A%2F%2Fwww.stw-ma.de%2FEssen%2520_%2520Trinken%2FMen%25C3%25BCpl%25C3%25A4ne%2FMensaria%2520Metropol-date-2015_02_16-pdfView-1.html&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey=g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
 
   $.get( url, function() {
   })
     .done(function(data) {
-
 
       $("#heute").html( parseTimetable( data,0 ) );
       $("#morgen").html( parseTimetable( data,1 ) );
@@ -48,19 +47,21 @@ function parseTimetable(html,dayoffset){
 }
 
 function parseMensa(data,dayoffset){
-  var days = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
   var time = new Date();
-  var menuplan = {};
-  for(key in data.results){
-      if(data.results[key].xs_text == days[time.getDay()-1+dayoffset] && data.results[key].hasOwnProperty("text_list_1")){
-        menuplan.suppe = data.results[key].text_1.replace(/ *\[[^\]]*\] */g, "");
-        menuplan.menu1 = data.results[key].text_list_1.join("<br>").replace(/ *\[[^\]]*\] */g, "").replace(menuplan.suppe+"<br>","");
-        menuplan.menu2 = data.results[key].text_list_3.join("<br>").replace(/ *\[[^\]]*\] */g, "").replace(menuplan.suppe+"<br>","");
-        menuplan.menu3 = data.results[key].text_list_4.join("<br>").replace(/ *\[[^\]]*\] */g, "").replace(menuplan.suppe+"<br>","");
-        var html = "<ul><li>"+menuplan.suppe+"</li><li>"+menuplan.menu1+"</li><li>"+menuplan.menu2+"</li><li>"+menuplan.menu3+"</li></ul>"
-        return html;
-      }
-  }
+  //var day = (time.getDay()-1)*2;
+  var day = 0;
+  var html = "";
+  html = html + "<ul>";
+  html = html + "<li>"+data.results[day].menu_1+"<br><b>"+data.results[day+1].menu_1.replace(",",".")+"</b></li>";
+  html = html + "<li>"+data.results[day].menu_2+"<br><b>"+data.results[day+1].menu_2.replace(",",".")+"</b></li>";
+  html = html + "<li>"+data.results[day].vegetarisch+"<br><b>"+data.results[day+1].vegetarisch.replace(",",".")+"</b></li>";
+  html = html + "</ul>";
+  html = html.replace(/ *\[[^\]]*\] */g, "");
+  html = html.replace(/\,/g, "<br>");
+
+
+  return html;
+
 }
 
 function settings(){
@@ -86,7 +87,7 @@ function changeKursID(){
 		id = id.split("uid=")[1];
 		$("#kursid").val(id);
 	}
-	
+
   chrome.storage.sync.set({"kurs": id})
   update();
 }
