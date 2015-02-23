@@ -177,3 +177,9 @@ a.item-icon:hover {
 	background: #eee;
 	z-index: 2;
 }
+
+
+.timeleft{
+  font-style:italic;
+  color:green;
+}
