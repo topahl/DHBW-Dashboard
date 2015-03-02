@@ -1,5 +1,5 @@
 $( document ).ready( setup );
-setInterval(updateData,60000);
+setInterval(loadStaticData,60000);
 var datastore = {};
 var API_KEY = "g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
 var MENSA_API = "ec5a49ed-dcdf-4f60-951b-6935759bc071";
@@ -7,26 +7,140 @@ var PLAN_API = "87d7b852-1980-4ea8-94ae-3d5d0999f987";
 var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 
 
+
+/**
+ * setup - description
+ * register event handlers
+ *
+ */
 function setup(){
-  $("#update").on("click",updateData);
+  console.log("setup");
+  $("#update").on("click",loadDynamicData);
   $("#settings").on("click",settings);
   $("#fahrplan").on("click",fahrplan);
   $("#closesettings").on("click",close);
   $("#closebus").on("click",close);
   $("#closemensa").on("click",close);
   $("#mensa").on("click",mensa);
-  chrome.storage.sync.get(function (obj) {
-    $("#kursid").val(obj.kurs);
-    $("#haltestelle").val(obj.stop);
-    changeStation();
-    updateData();
-    updateBus();
-  });
-
   $("#kursid").on("keyup",changeKursID);
   $("#haltestelle").on("keyup",changeStation);
   $(".autofill li").on("click",autofill);
+  loadChromeData();
+}
 
+
+/**
+ * loadChromeData - description
+ * loads the data stored in chrome storrage
+ * This function is asynchronous
+ *
+ */
+function loadChromeData(){
+  console.log("loadChromeData");
+    chrome.storage.sync.get(function (obj) {
+      $("#kursid").val(obj.kurs);
+      $("#haltestelle").val(obj.stop);
+      datastore.kurs_uid = obj.kurs;
+      changeStation();
+      loadStaticData();
+    });
+}
+
+
+/**
+ * loadStaticData - description
+ * loading fo statical Data
+ *    DHBW Plan
+ *    Mensa Plan
+ *
+ * data is stored in datastore variable
+ */
+function loadStaticData(){
+  console.log("loadStaticData");
+  //set current Date and Time
+  datastore.now = new Date();
+
+
+  //Bbuild API url's
+    //Content url's
+  var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+datastore.kurs_uid;
+  var mensaurl = "https://www.stw-ma.de/Essen+_+Trinken/Men%C3%BCpl%C3%A4ne/Mensaria+Metropol-date-"+datastore.now.toJSON().replace(/T.*/,"").replace(/-/g,"_")+"-pdfView-1.html";
+    //API url's
+  var mensaapi_url = "https://api.import.io/store/data/"+MENSA_API+"/_query?input/webpage/url="+encodeURIComponent(mensaurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
+  var planapi_url = "https://api.import.io/store/data/"+PLAN_API+"/_query?input/webpage/url="+encodeURIComponent(planurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
+
+
+  $.get( planapi_url, function() {
+  })
+    .done(function(data){
+      datastore.plan = data;
+      $.get( mensaapi_url, function() {
+      })
+        .done(function(data){
+          datastore.mensa = data;
+          loadDynamicData();
+        }
+      );
+    }
+  );
+}
+
+
+/**
+ * loadDynamicData - description
+ *
+ * loads Data that needs to be reloaded every minute
+ * * Bus-Plan
+ */
+function loadDynamicData(){
+  console.log("loadDynamicData");
+  var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+datastore.hs)+"&mode=direct";
+  var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
+  $.get( busapi_url, function(){})
+    .done(function(data){
+      datastore.bus = data;
+      processData();
+    });
+}
+
+
+/**
+ * processData - description
+ * prepares Data for display and places it on the screen
+ *
+ * @return {type}  description
+ */
+function processData(){
+  console.log("processData");
+  processPlan();
+  processMensa();
+  processBus();
+}
+
+function processPlan(){
+    parsePlan("#heute",0);
+    parsePlan("#morgen",1);
+}
+
+function processMensa(){
+  parseMensa("#mensaplan");
+}
+
+function processBus(){
+  var data = datastore.bus;
+  var result = "<ul>";
+  for(key in data.results){
+    result = result + "<li>";
+    result = result + "<span class=time>"+data.results[key].abfahrt+"</span>";
+    result = result + "<span class=line>"+data.results[key].linie+"</span>";
+    result = result + "<span class=station>"+data.results[key].direction+"</span>";
+    if(data.results[key].hasOwnProperty("time")){
+      result = result + "<span class=status>"+data.results[key].time+"</span>";
+    }
+    result = result + "</li>";
+  }
+  result = result + "</ul>";
+  $("#buslayer .content-box").html(result);
 }
 
 
@@ -44,6 +158,7 @@ function changeStation(){
         $(".haltestellenid").text(result[0].value);
         chrome.storage.sync.set({"stop": decodeHtml(result[0].hs)});
         datastore.hs=result[0].value;
+        loadDynamicData();
       }
     }
     else{
@@ -72,59 +187,9 @@ function changeStation(){
     }
 }
 
-function updateBus(){
-  var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+datastore.hs)+"&mode=direct";
-  var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
-  $.get( busapi_url, function(){})
-    .done(function(data){
-      console.log(data);
-      var result = "<ul>";
-
-      for(key in data.results){
-          result = result + "<li>";
-          result = result + "<span class=time>"+data.results[key].abfahrt+"</span>";
-          result = result + "<span class=line>"+data.results[key].linie+"</span>";
-          result = result + "<span class=station>"+data.results[key].direction+"</span>";
-          if(data.results[key].hasOwnProperty("time")){
-            result = result + "<span class=status>"+data.results[key].time+"</span>";
-          }
-          result = result + "</li>";
-      }
-      result = result + "</ul>";
-      $("#buslayer .content-box").html(result);
-    });
-}
-
-function updateData(){
-  datastore.now = new Date();
-  datastore.kurs_uid = $("#kursid").val();
-  var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+datastore.kurs_uid;
-  var mensaurl = "https://www.stw-ma.de/Essen+_+Trinken/Men%C3%BCpl%C3%A4ne/Mensaria+Metropol-date-"+datastore.now.toJSON().replace(/T.*/,"").replace(/-/g,"_")+"-pdfView-1.html";
-    //API url's (JSON)
-  var mensaapi_url = "https://api.import.io/store/data/"+MENSA_API+"/_query?input/webpage/url="+encodeURIComponent(mensaurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
-  var planapi_url = "https://api.import.io/store/data/"+PLAN_API+"/_query?input/webpage/url="+encodeURIComponent(planurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
-
-  $.get( planapi_url, function() {
-  })
-    .done(function(data){
-      datastore.plan = data;
-      parsePlan("#heute",0);
-      parsePlan("#morgen",1);
-    }
-  );
-  $.get( mensaapi_url, function() {
-  })
-    .done(function(data){
-      datastore.mensa = data;
-      parseMensa("#mensaplan");
-    }
-  );
-}
 
 function parsePlan(object,offset){
-
   var day = datastore.now.getDay();
-  //var day = 1
   var kursname = datastore.plan.results[0].kurs;
   $(".kursname").text( (kursname.length > 0) ? kursname : "Kein Kurs eingetragen");
   var html = datastore.plan.results[datastore.now.getDay()-1+offset];
@@ -161,19 +226,7 @@ function parseMensa(object){
 
 }
 
-function settings(){
-  $("#settingslayer").fadeIn();
-}
 
-function fahrplan(){
-  $("#buslayer").fadeIn();
-}
-
-function close(){
-  $("#settingslayer").fadeOut();
-  $("#mensalayer").fadeOut();
-  $("#buslayer").fadeOut();
-}
 
 function changeKursID(){
   var id = $("#kursid").val();
@@ -184,7 +237,7 @@ function changeKursID(){
 	}
 
   chrome.storage.sync.set({"kurs": id})
-  loadData();
+  loadStaticData();
 }
 
 function germanDateString(day){
@@ -192,10 +245,6 @@ function germanDateString(day){
   var date = new Date(day);
   return weekday[date.getDay()-1] + " - " + date.getDate() + "." + (date.getMonth()+1);
 
-}
-
-function mensa(){
-  $("#mensalayer").fadeIn();
 }
 
 function prepareTimeString(time,day){
