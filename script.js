@@ -17,11 +17,7 @@ function setup(){
   console.log("setup");
   $("#update").on("click",loadDynamicData);
   $("#settings").on("click",settings);
-  $("#fahrplan").on("click",loadStaticData);
   $("#closesettings").on("click",close);
-  $("#closebus").on("click",close);
-  $("#closemensa").on("click",close);
-  $("#mensa").on("click",mensa);
   $("#kursid").on("keyup",changeKursID);
   $("#haltestelle").on("keyup",changeStation);
   $(".autofill li").on("click",autofill);
