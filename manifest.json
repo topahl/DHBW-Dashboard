@@ -1,7 +1,7 @@
 {
   "name": "DHBW Dashboard",
   "description": "DHBW Information",
-  "version": "0.2",
+  "version": "0.21",
   "manifest_version": 2,
   "app": {
     "background": {

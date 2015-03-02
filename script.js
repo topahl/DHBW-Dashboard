@@ -144,11 +144,11 @@ function processBus(){
 		result = result + '</div><div class="flex-box">';
     result = result + '<span><strong>'+data.results[key].abfahrt+'</strong>';
 		if(data.results[key].hasOwnProperty('time')) {
-			
+
 			var colorClass = 'color-red';
 			if(data.results[key].time.endsWith("pünktlich"))
 				colorClass = 'color-green';
-			
+
       result = result + ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
     }
     result = result + '<br>'+data.results[key].direction;
@@ -200,7 +200,7 @@ function changeStation(){
       }
       else{
         $("#autofill_stop_3").slideUp();
-      }c
+      }
     }
 }
 
