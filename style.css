@@ -216,3 +216,11 @@ a.item-icon:hover {
   font-style:italic;
   color:green;
 }
+
+#mensaplan li[data-role="list-divider"]{
+    background-color: #FF9800;
+}
+
+#busplan li[data-role="list-divider"]{
+    background-color: #03A9F4;
+}
