@@ -16,6 +16,7 @@ var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 function setup(){
   console.log("setup");
   $("#update").on("click",loadDynamicData);
+  $('#fullscreen').on('click',dockWindow);
   $("#settings").on("click",settings);
   $("#closesettings").on("click",close);
   $("#kursid").on("keyup",changeKursID);
@@ -277,6 +278,11 @@ function search(array,term){
   }
   return result;
 
+}
+
+function dockWindow(){
+  window.resizeTo(400,10000);
+  window.moveTo(10000,0);
 }
 
 function decodeHtml(html) {
