@@ -68,7 +68,6 @@ li[data-role="list-divider"] {
     left: 0px;
     position: absolute;
     width: 100%;
-
 }
 
 .autofill{
@@ -133,6 +132,13 @@ input:focus {
 	padding: 1rem;
 }
 
+.flex-box {
+	display: flex;
+	align-items: stretch;
+	align-content: space-between;
+	width: 100%;
+}
+
 a.item-link {
 	display: block;
 	margin: -1rem;
@@ -162,33 +168,39 @@ ul .cal-time {
 	fill: #000000;
 }
 
-.item-icon {
+.item-icon-wrapper {
 	display: flex;
-	align-items: center;
+	align-items: stretch;
+	align-content: stretch;
 	width: 100%;
 }
-li.item-icon {
+li.item-icon-wrapper {
 	padding: 0;
 }
-li .item-icon {
+li .item-icon-wrapper {
 	width: calc(100% + 2rem);
 	margin: -1rem;
 }
-.item-icon svg {
-	margin-right: 1rem;
+.item-icon-wrapper .item-icon {
+	display: flex;
+	align-content: center;
+	align-items: stretch;
 	padding: 1rem;
 	background-color: #f5f5f5;
 }
-.item-icon a, .item-icon span {
+.item-icon-wrapper .item-icon svg {
+	margin: auto;
+}
+.item-icon-wrapper a, .item-icon-wrapper div {
 	display: block;
 	padding: 1rem;
 }
-a.item-icon:hover {
+a.item-icon-wrapper:hover {
 	background-color: #f5f5f5;
 }
 
 
-#settingslayer{
+#settingslayer {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -217,10 +229,19 @@ a.item-icon:hover {
   color:green;
 }
 
-#mensaplan li[data-role="list-divider"]{
+#mensaplan li[data-role="list-divider"] {
     background-color: #FF9800;
 }
 
-#busplan li[data-role="list-divider"]{
+#busplan li[data-role="list-divider"] {
     background-color: #03A9F4;
+}
+
+
+
+.color-green {
+	color: #4caf50;
+}
+.color-red {
+	color: #f44336;
 }

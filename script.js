@@ -1,3 +1,8 @@
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
+
 $( document ).ready( setup );
 setInterval(loadStaticData,60000);
 var datastore = {};
@@ -126,16 +131,30 @@ function processMensa(){
 function processBus(){
   var data = datastore.bus;
   var result = '<ul>';
-  var result = result +   '<li data-role="list-divider">Fahrplan</li>';
-  for(key in data.results){
-    result = result + '<li>';
-    result = result + '<span class="time">'+data.results[key].abfahrt+'</span>';
-    result = result + '<span class="line">'+data.results[key].linie+'</span>';
-    result = result + '<span class="station">'+data.results[key].direction+'</span>';
-    if(data.results[key].hasOwnProperty('time')){
-      result = result + '<span class=status>'+data.results[key].time+'</span>';
+  var result = result + '<li data-role="list-divider">Fahrplan</li>';
+  for(key in data.results) {
+    result = result + '<li><div class="item-icon-wrapper"><div class="item-icon">';
+		if(data.results[key].icon.endsWith("strab.png") || data.results[key].icon.endsWith("s_bahn.png") || data.results[key].icon.endsWith("ice.png") || data.results[key].icon.endsWith("regionalbahn.png")) {
+			// tram icon
+			result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,10H6V5H18M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M4,15.5A3.5,3.5 0 0,0 7.5,19L6,20.5V21H18V20.5L16.5,19A3.5,3.5 0 0,0 20,15.5V5C20,1.5 16.42,1 12,1C7.58,1 4,1.5 4,5V15.5Z" /></svg>';
+		} else {
+			// bus icon
+			result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,11H6V6H18M16.5,17A1.5,1.5 0 0,1 15,15.5A1.5,1.5 0 0,1 16.5,14A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 16.5,17M7.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,14A1.5,1.5 0 0,1 9,15.5A1.5,1.5 0 0,1 7.5,17M4,16C4,16.88 4.39,17.67 5,18.22V20A1,1 0 0,0 6,21H7A1,1 0 0,0 8,20V19H16V20A1,1 0 0,0 17,21H18A1,1 0 0,0 19,20V18.22C19.61,17.67 20,16.88 20,16V6C20,2.5 16.42,2 12,2C7.58,2 4,2.5 4,6V16Z" /></svg>';
+		}
+		result = result + '</div><div class="flex-box">';
+    result = result + '<span><strong>'+data.results[key].abfahrt+'</strong>';
+		if(data.results[key].hasOwnProperty('time')) {
+			
+			var colorClass = 'color-red';
+			if(data.results[key].time.endsWith("pünktlich"))
+				colorClass = 'color-green';
+			
+      result = result + ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
     }
-    result = result + '</li>';
+    result = result + '<br>'+data.results[key].direction;
+    result = result + ' &mdash; '+data.results[key].linie+'</span>';
+		result = result + '</div>';
+    result = result + '</div></li>';
   }
   result = result + '</ul>';
   $('#busplan').html(result);
@@ -208,7 +227,7 @@ function parsePlan(object,offset){
 }
 
 function parseMensa(object){
-  //var day = (time.getDay()-1)*2;
+  //var day = (time.getDay()-1)*2;//TODO
   var day = datastore.now.getDay()-1;
   var data = datastore.mensa;
   var html = '';
@@ -241,7 +260,7 @@ function changeKursID(){
 function germanDateString(day){
   var weekday = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
   var date = new Date(day);
-  return weekday[date.getDay()-1] + " - " + date.getDate() + "." + (date.getMonth()+1);
+  return weekday[date.getDay()-1] + " - " + date.getDate() + "." + (date.getMonth()+1) + ".";
 
 }
 
