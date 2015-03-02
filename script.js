@@ -4,21 +4,95 @@ var datastore = {};
 var API_KEY = "g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
 var MENSA_API = "ec5a49ed-dcdf-4f60-951b-6935759bc071";
 var PLAN_API = "87d7b852-1980-4ea8-94ae-3d5d0999f987";
-
+var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 
 
 function setup(){
   $("#update").on("click",updateData);
   $("#settings").on("click",settings);
+  $("#fahrplan").on("click",fahrplan);
   $("#closesettings").on("click",close);
+  $("#closebus").on("click",close);
   $("#closemensa").on("click",close);
   $("#mensa").on("click",mensa);
-  chrome.storage.sync.get("kurs", function (obj) {
+  chrome.storage.sync.get(function (obj) {
     $("#kursid").val(obj.kurs);
+    $("#haltestelle").val(obj.stop);
+    changeStation();
     updateData();
+    updateBus();
   });
-  $("#kursid").on("keyup",changeKursID);
 
+  $("#kursid").on("keyup",changeKursID);
+  $("#haltestelle").on("keyup",changeStation);
+  $(".autofill li").on("click",autofill);
+
+}
+
+
+function autofill(){
+  $("#haltestelle").val($( this ).html());
+  changeStation();
+}
+
+function changeStation(){
+    var value = $("#haltestelle").val();
+    var result = search(vrn,value);
+    if(value === "" || (decodeHtml(result[0].hs) == value)){
+      $("#autofill_stop").slideUp();
+      if(result.length == 1){
+        $(".haltestellenid").text(result[0].value);
+        chrome.storage.sync.set({"stop": decodeHtml(result[0].hs)});
+        datastore.hs=result[0].value;
+      }
+    }
+    else{
+      if(result.length > 0){
+          $("#autofill_stop").slideDown();
+          $("#autofill_stop_1").slideDown();
+          $("#autofill_stop_1").html(result[0].hs);
+      }
+      else{
+        $("#autofill_stop").slideUp();
+      }
+      if(result.length > 1){
+        $("#autofill_stop_2").slideDown();
+        $("#autofill_stop_2").html(result[1].hs);
+      }
+      else{
+        $("#autofill_stop_2").slideUp();
+      }
+      if(result.length > 2){
+        $("#autofill_stop_3").slideDown();
+        $("#autofill_stop_3").html(result[2].hs);
+      }
+      else{
+        $("#autofill_stop_3").slideUp();
+      }c
+    }
+}
+
+function updateBus(){
+  var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+datastore.hs)+"&mode=direct";
+  var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
+  $.get( busapi_url, function(){})
+    .done(function(data){
+      console.log(data);
+      var result = "<ul>";
+
+      for(key in data.results){
+          result = result + "<li>";
+          result = result + "<span class=time>"+data.results[key].abfahrt+"</span>";
+          result = result + "<span class=line>"+data.results[key].linie+"</span>";
+          result = result + "<span class=station>"+data.results[key].direction+"</span>";
+          if(data.results[key].hasOwnProperty("time")){
+            result = result + "<span class=status>"+data.results[key].time+"</span>";
+          }
+          result = result + "</li>";
+      }
+      result = result + "</ul>";
+      $("#buslayer .content-box").html(result);
+    });
 }
 
 function updateData(){
@@ -29,6 +103,7 @@ function updateData(){
     //API url's (JSON)
   var mensaapi_url = "https://api.import.io/store/data/"+MENSA_API+"/_query?input/webpage/url="+encodeURIComponent(mensaurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
   var planapi_url = "https://api.import.io/store/data/"+PLAN_API+"/_query?input/webpage/url="+encodeURIComponent(planurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
+
   $.get( planapi_url, function() {
   })
     .done(function(data){
@@ -47,19 +122,26 @@ function updateData(){
 }
 
 function parsePlan(object,offset){
+
   var day = datastore.now.getDay();
   //var day = 1
   var kursname = datastore.plan.results[0].kurs;
   $(".kursname").text( (kursname.length > 0) ? kursname : "Kein Kurs eingetragen");
   var html = datastore.plan.results[datastore.now.getDay()-1+offset];
-  var result = '';
-  result = result + '<ul>';
-  result = result + '<li data-role="list-divider">'+germanDateString(html.day)+'</li>';
-  for (var key in html.kurs_name){
-    result = result + '<li><b>'+prepareTimeString(html.time[key],html.day)+'</b><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
+  if(typeof html == "object"){
+    var result = '';
+    result = result + '<ul>';
+    result = result + '<li data-role="list-divider">'+germanDateString(html.day)+'</li>';
+    if(typeof html.time === 'object')
+    for (var key in html.kurs_name){
+      result = result + '<li><b>'+prepareTimeString(html.time[key],html.day)+'</b><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
+    }
+    else{
+      result = result + '<li><b>'+prepareTimeString(html.time,html.day)+'</b><br>'+html.kurs_name+'<br>'+html.raum+'</li>';
+    }
+    result = result + '</ul>';
+    $(object).html( result );
   }
-  result = result + '</ul>';
-  $(object).html( result );
 }
 
 function parseMensa(object){
@@ -83,9 +165,14 @@ function settings(){
   $("#settingslayer").fadeIn();
 }
 
+function fahrplan(){
+  $("#buslayer").fadeIn();
+}
+
 function close(){
   $("#settingslayer").fadeOut();
   $("#mensalayer").fadeOut();
+  $("#buslayer").fadeOut();
 }
 
 function changeKursID(){
@@ -112,20 +199,42 @@ function mensa(){
 }
 
 function prepareTimeString(time,day){
-  var now = new Date();
-  var result = time;
-  var times =  time.split(/[:-]/);
-  times=[times[0]*60+times[1]*1,times[2]*60+times[3]*1];
-  if(day-now < 0){
-    now = (now.getHours()*60)+now.getMinutes();
-    if(times[0]<=now){
-      if(times[1]>=now){
-        var diff = times[1]-now;
-        var minutes = (diff%60);
-        minutes = (minutes < 10) ?("0"+minutes):minutes;
-        result = result + '</b><span class="timeleft"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><b>';
+  datastore.now = new Date();
+  var now = datastore.now;
+  var result = "";
+  if(typeof time === "string"){
+    result = time;
+    var times =  time.split(/[:-]/);
+    times=[times[0]*60+times[1]*1,times[2]*60+times[3]*1];
+    if(day-now < 0){
+      now = (now.getHours()*60)+now.getMinutes();
+      if(times[0]<=now){
+        if(times[1]>=now){
+          var diff = times[1]-now;
+          var minutes = (diff%60);
+          minutes = (minutes < 10) ?("0"+minutes):minutes;
+          result = result + '</b><span class="timeleft"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><b>';
+        }
       }
     }
   }
   return result;
+}
+
+function search(array,term){
+
+  var result = [];
+  for(var  i = 0 ; i < array.length ; i++){
+    if (decodeHtml(array[i].hs).toLowerCase().indexOf(term.toLowerCase())>-1) {
+      result.push(array[i]);
+    }
+  }
+  return result;
+
+}
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
 }
