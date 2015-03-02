@@ -17,7 +17,7 @@ function setup(){
   console.log("setup");
   $("#update").on("click",loadDynamicData);
   $("#settings").on("click",settings);
-  $("#fahrplan").on("click",fahrplan);
+  $("#fahrplan").on("click",loadStaticData);
   $("#closesettings").on("click",close);
   $("#closebus").on("click",close);
   $("#closemensa").on("click",close);
@@ -94,7 +94,7 @@ function loadStaticData(){
  */
 function loadDynamicData(){
   console.log("loadDynamicData");
-  var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+datastore.hs)+"&mode=direct";
+  var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&limit=4&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+datastore.hs)+"&mode=direct";
   var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
   $.get( busapi_url, function(){})
     .done(function(data){
@@ -128,19 +128,20 @@ function processMensa(){
 
 function processBus(){
   var data = datastore.bus;
-  var result = "<ul>";
+  var result = '<ul>';
+  var result = result +   '<li data-role="list-divider">Fahrplan</li>';
   for(key in data.results){
-    result = result + "<li>";
-    result = result + "<span class=time>"+data.results[key].abfahrt+"</span>";
-    result = result + "<span class=line>"+data.results[key].linie+"</span>";
-    result = result + "<span class=station>"+data.results[key].direction+"</span>";
-    if(data.results[key].hasOwnProperty("time")){
-      result = result + "<span class=status>"+data.results[key].time+"</span>";
+    result = result + '<li>';
+    result = result + '<span class="time">'+data.results[key].abfahrt+'</span>';
+    result = result + '<span class="line">'+data.results[key].linie+'</span>';
+    result = result + '<span class="station">'+data.results[key].direction+'</span>';
+    if(data.results[key].hasOwnProperty('time')){
+      result = result + '<span class=status>'+data.results[key].time+'</span>';
     }
-    result = result + "</li>";
+    result = result + '</li>';
   }
-  result = result + "</ul>";
-  $("#buslayer .content-box").html(result);
+  result = result + '</ul>';
+  $('#busplan').html(result);
 }
 
 

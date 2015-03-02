@@ -188,7 +188,7 @@ a.item-icon:hover {
 }
 
 
-#settingslayer, #mensalayer, #buslayer{
+#settingslayer{
 	position: absolute;
 	top: 0;
 	left: 0;
