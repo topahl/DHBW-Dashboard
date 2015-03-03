@@ -64,11 +64,11 @@ function loadStaticData(){
   datastore.now = new Date();
 
 
-  //Bbuild API url's
-    //Content url's
+  //build API url's
+  //Content url's
   var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+datastore.kurs_uid;
   var mensaurl = "https://www.stw-ma.de/Essen+_+Trinken/Men%C3%BCpl%C3%A4ne/Mensaria+Metropol-date-"+datastore.now.toJSON().replace(/T.*/,"").replace(/-/g,"_")+"-pdfView-1.html";
-    //API url's
+  //API url's
   var mensaapi_url = "https://api.import.io/store/data/"+MENSA_API+"/_query?input/webpage/url="+encodeURIComponent(mensaurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
   var planapi_url = "https://api.import.io/store/data/"+PLAN_API+"/_query?input/webpage/url="+encodeURIComponent(planurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
 
@@ -160,8 +160,8 @@ function processBus(){
 
 				result = result + ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
 			}
-			result = result + '<br>'+data.results[key].direction;
-			result = result + ' &mdash; '+data.results[key].linie+'</span>';
+			result = result + '<br>'+data.results[key].direction+'</span>';
+			result = result + ' <span>'+data.results[key].linie+'</span>';
 			result = result + '</div>';
 			result = result + '</div></li>';
 		}
@@ -243,10 +243,10 @@ function parseMensa(object){
   var data = datastore.mensa;
   var html = '';
   html = html + '<ul>';
-  html = html + '<li data-role="list-divider">Mensa</li>';
-  html = html + '<li>'+data.results[day].menu_1+'<br><strong>'+data.results[day+1].menu_1.replace(',','.')+'</strong></li>';
-  html = html + '<li>'+data.results[day].menu_2+'<br><strong>'+data.results[day+1].menu_2.replace(',','.')+'</strong></li>';
-  html = html + '<li>'+data.results[day].vegetarisch+'<br><strong>'+data.results[day+1].vegetarisch.replace(',','.')+'</strong></li>';
+  html = html + '<li data-role="list-divider">Mensaria Metropol</li>';
+  html = html + '<li><div class="flex-box"><div>'+data.results[day].menu_1+'</div><strong class="price">'+data.results[day+1].menu_1.replace(',','.')+'</strong></div></li>';
+	html = html + '<li><div class="flex-box"><div>'+data.results[day].menu_2+'</div><strong class="price">'+data.results[day+1].menu_2.replace(',','.')+'</strong></div></li>';
+  html = html + '<li><div class="flex-box"><div>'+data.results[day].vegetarisch+'</div><strong class="price">'+data.results[day+1].vegetarisch.replace(',','.')+'</strong></div></li>';
   html = html + '</ul>';
   html = html.replace(/ *\[[^\]]*\] */g, "");
   html = html.replace(/\,/g, "<br>");
@@ -272,7 +272,6 @@ function germanDateString(day){
   var weekday = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
   var date = new Date(day);
   return weekday[date.getDay()-1] + " - " + date.getDate() + "." + (date.getMonth()+1) + ".";
-
 }
 
 function prepareTimeString(time,day){
@@ -312,11 +311,12 @@ function search(array,term){
 
 
 function dockWindow(){
-  window.resizeTo(400,10000);
+  window.resizeTo(450,10000);
   window.moveTo(10000,0);
 }
 
 function decodeHtml(html) {
+//		return html;//TODO
     var txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;

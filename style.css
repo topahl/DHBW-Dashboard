@@ -118,7 +118,6 @@ input:focus {
 
 
 
-
 /**
  * @Section Custom Layouts
  */
@@ -134,9 +133,9 @@ input:focus {
 }
 
 .flex-box {
-	display: flex;
+	display: flex !important;
 	align-items: stretch;
-	align-content: space-between;
+	justify-content: space-between;
 	width: 100%;
 }
 
@@ -188,6 +187,8 @@ li .item-icon-wrapper {
 	align-items: stretch;
 	padding: 1rem;
 	background-color: #f5f5f5;
+	color: #999;
+	min-width: 24px;
 }
 .item-icon-wrapper .item-icon svg {
 	margin: auto;
@@ -234,6 +235,9 @@ a.item-icon-wrapper:hover {
 .color-red {
 	color: #f44336;
 }
+.color-gray {
+	color: #999;
+}
 
 
 
@@ -246,7 +250,11 @@ a.item-icon-wrapper:hover {
 .hidden-small {
 	display: none;
 }
-
+.price {
+	min-width: 4em;
+	text-align: right;
+	white-space: nowrap;
+}
 
 
 @media screen and (min-width: 768px) {
