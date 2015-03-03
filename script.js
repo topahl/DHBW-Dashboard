@@ -228,7 +228,7 @@ function parsePlan(object,offset){
 
 function parseMensa(object){
   //var day = (time.getDay()-1)*2;//TODO
-  var day = datastore.now.getDay()-1;
+  var day = (datastore.now.getDay()-1)*2;
   var data = datastore.mensa;
   var html = '';
   html = html + '<ul>';
