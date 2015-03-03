@@ -22,6 +22,7 @@ a {
 	text-decoration: none;
 	color: #2196f3;
 	background-color: transparent;
+	outline: 0;
 	transition: color .4s ease-out 0s, background-color .4s ease-out 0s;
 }
 a:hover {
@@ -211,22 +212,9 @@ a.item-icon-wrapper:hover {
 	z-index: 2;
 }
 
-.time{
-    font-weight: bold;
-    float: left;
-}
-.status{
-    color: green;
-    float: right;
-}
-.line{
-    text-align: right;
-    display: block;
-}
 
-.timeleft{
-  font-style:italic;
-  color:green;
+.time {
+  font-style: italic;
 }
 
 #mensaplan li[data-role="list-divider"] {
@@ -236,6 +224,7 @@ a.item-icon-wrapper:hover {
 #busplan li[data-role="list-divider"] {
     background-color: #03A9F4;
 }
+
 
 
 

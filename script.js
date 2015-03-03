@@ -227,10 +227,10 @@ function parsePlan(object,offset){
     result = result + '<li data-role="list-divider">'+germanDateString(html.day)+'</li>';
     if(typeof html.time === 'object')
     for (var key in html.kurs_name){
-      result = result + '<li><b>'+prepareTimeString(html.time[key],html.day)+'</b><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
+      result = result + '<li><strong>'+prepareTimeString(html.time[key],html.day)+'</strong><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
     }
     else{
-      result = result + '<li><b>'+prepareTimeString(html.time,html.day)+'</b><br>'+html.kurs_name+'<br>'+html.raum+'</li>';
+      result = result + '<li><strong>'+prepareTimeString(html.time,html.day)+'</strong><br>'+html.kurs_name+'<br>'+html.raum+'</li>';
     }
     result = result + '</ul>';
     $(object).html( result );
@@ -244,9 +244,9 @@ function parseMensa(object){
   var html = '';
   html = html + '<ul>';
   html = html + '<li data-role="list-divider">Mensa</li>';
-  html = html + '<li>'+data.results[day].menu_1+'<br><b>'+data.results[day+1].menu_1.replace(',','.')+'</b></li>';
-  html = html + '<li>'+data.results[day].menu_2+'<br><b>'+data.results[day+1].menu_2.replace(',','.')+'</b></li>';
-  html = html + '<li>'+data.results[day].vegetarisch+'<br><b>'+data.results[day+1].vegetarisch.replace(',','.')+'</b></li>';
+  html = html + '<li>'+data.results[day].menu_1+'<br><strong>'+data.results[day+1].menu_1.replace(',','.')+'</strong></li>';
+  html = html + '<li>'+data.results[day].menu_2+'<br><strong>'+data.results[day+1].menu_2.replace(',','.')+'</strong></li>';
+  html = html + '<li>'+data.results[day].vegetarisch+'<br><strong>'+data.results[day+1].vegetarisch.replace(',','.')+'</strong></li>';
   html = html + '</ul>';
   html = html.replace(/ *\[[^\]]*\] */g, "");
   html = html.replace(/\,/g, "<br>");
@@ -290,7 +290,7 @@ function prepareTimeString(time,day){
           var diff = times[1]-now;
           var minutes = (diff%60);
           minutes = (minutes < 10) ?("0"+minutes):minutes;
-          result = result + '</b><span class="timeleft"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><b>';
+          result = result + '</strong><span class="color-green"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><strong>';
         }
       }
     }
