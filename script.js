@@ -13,6 +13,7 @@ var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 
 
 
+
 /**
  * setup - description
  * register event handlers
@@ -130,34 +131,44 @@ function processMensa(){
 
 function processBus(){
   var data = datastore.bus;
-  var result = '<ul>';
-  var result = result + '<li data-role="list-divider">Fahrplan</li>';
-  for(key in data.results) {
-    result = result + '<li><div class="item-icon-wrapper"><div class="item-icon">';
-		if(data.results[key].icon.endsWith("strab.png") || data.results[key].icon.endsWith("s_bahn.png") || data.results[key].icon.endsWith("ice.png") || data.results[key].icon.endsWith("regionalbahn.png")) {
-			// tram icon
-			result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,10H6V5H18M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M4,15.5A3.5,3.5 0 0,0 7.5,19L6,20.5V21H18V20.5L16.5,19A3.5,3.5 0 0,0 20,15.5V5C20,1.5 16.42,1 12,1C7.58,1 4,1.5 4,5V15.5Z" /></svg>';
-		} else {
-			// bus icon
-			result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,11H6V6H18M16.5,17A1.5,1.5 0 0,1 15,15.5A1.5,1.5 0 0,1 16.5,14A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 16.5,17M7.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,14A1.5,1.5 0 0,1 9,15.5A1.5,1.5 0 0,1 7.5,17M4,16C4,16.88 4.39,17.67 5,18.22V20A1,1 0 0,0 6,21H7A1,1 0 0,0 8,20V19H16V20A1,1 0 0,0 17,21H18A1,1 0 0,0 19,20V18.22C19.61,17.67 20,16.88 20,16V6C20,2.5 16.42,2 12,2C7.58,2 4,2.5 4,6V16Z" /></svg>';
+
+	chrome.storage.sync.get("stop", function(items) {
+		
+		var stopName = "Fahrplan";
+		if(items.hasOwnProperty("stop")) {
+			stopName = items.stop;
 		}
-		result = result + '</div><div class="flex-box">';
-    result = result + '<span><strong>'+data.results[key].abfahrt+'</strong>';
-		if(data.results[key].hasOwnProperty('time')) {
+		
+		var result = '<ul>';
+		result = result + '<li data-role="list-divider">'+stopName+'</li>';
+		for(key in data.results) {
+			result = result + '<li><div class="item-icon-wrapper"><div class="item-icon">';
+			if(data.results[key].icon.endsWith("bus.png")) {// || data.results[key].icon.endsWith("s_bahn.png") || data.results[key].icon.endsWith("ice.png") || data.results[key].icon.endsWith("regionalbahn.png")) {
+				// bus icon
+				result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,11H6V6H18M16.5,17A1.5,1.5 0 0,1 15,15.5A1.5,1.5 0 0,1 16.5,14A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 16.5,17M7.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,14A1.5,1.5 0 0,1 9,15.5A1.5,1.5 0 0,1 7.5,17M4,16C4,16.88 4.39,17.67 5,18.22V20A1,1 0 0,0 6,21H7A1,1 0 0,0 8,20V19H16V20A1,1 0 0,0 17,21H18A1,1 0 0,0 19,20V18.22C19.61,17.67 20,16.88 20,16V6C20,2.5 16.42,2 12,2C7.58,2 4,2.5 4,6V16Z" /></svg>';
+			} else {
+				// tram icon
+				result = result + '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,10H6V5H18M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M4,15.5A3.5,3.5 0 0,0 7.5,19L6,20.5V21H18V20.5L16.5,19A3.5,3.5 0 0,0 20,15.5V5C20,1.5 16.42,1 12,1C7.58,1 4,1.5 4,5V15.5Z" /></svg>';
+			}
+			result = result + '</div><div class="flex-box">';
+			result = result + '<span><strong>'+data.results[key].abfahrt+'</strong>';
+			if(data.results[key].hasOwnProperty('time')) {
 
-			var colorClass = 'color-red';
-			if(data.results[key].time.endsWith("pünktlich"))
-				colorClass = 'color-green';
+				var colorClass = 'color-red';
+				if(data.results[key].time.endsWith("nktlich"))
+					colorClass = 'color-green';
 
-      result = result + ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
-    }
-    result = result + '<br>'+data.results[key].direction;
-    result = result + ' &mdash; '+data.results[key].linie+'</span>';
-		result = result + '</div>';
-    result = result + '</div></li>';
-  }
-  result = result + '</ul>';
-  $('#busplan').html(result);
+				result = result + ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
+			}
+			result = result + '<br>'+data.results[key].direction;
+			result = result + ' &mdash; '+data.results[key].linie+'</span>';
+			result = result + '</div>';
+			result = result + '</div></li>';
+		}
+		result = result + '</ul>';
+		$('#busplan').html(result);
+
+	});
 }
 
 
@@ -298,6 +309,7 @@ function search(array,term){
   return result;
 
 }
+
 
 function dockWindow(){
   window.resizeTo(400,10000);
