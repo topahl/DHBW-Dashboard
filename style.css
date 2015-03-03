@@ -124,7 +124,7 @@ input:focus {
  */
 
 .content-box, .list-box {
-    margin: 1rem;
+    margin: 1rem 1rem 0;
     padding: 0;
     background: #fff;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.12);
@@ -233,4 +233,40 @@ a.item-icon-wrapper:hover {
 }
 .color-red {
 	color: #f44336;
+}
+
+
+
+
+
+.layout-grid {
+	display: flex;
+	flex-flow: column;
+}
+.hidden-small {
+	display: none;
+}
+
+
+
+@media screen and (min-width: 768px) {
+	
+	.layout-grid {
+		flex-flow: row wrap;
+	}
+	.layout-grid .layout-container {
+		width: 50%;
+	}
+
+	.hidden-small {
+		display: inline;
+	}
+}
+
+
+@media screen and (min-width: 1024px) {
+	
+	.layout-grid .layout-container {
+		width: 25%;
+	}
 }

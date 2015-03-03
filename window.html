@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
   <head>
-    <title>DHBW Quickview</title>
+    <title>DHBW Dashboard</title>
+		<meta charset="utf-8">
 
     <script src="jquery.min.js"></script>
     <script src="vrn.js"></script>
@@ -48,7 +49,7 @@
     </div>
 
 		<h3 class="taskbar">
-			<span class="kursname">Vorlesungsplan</span>
+			<div><span class="hidden-small">DHBW Dashboard &ndash; </span><span class="kursname">Lädt...</span></div>
 			<span>
         <svg id="fullscreen" style="width:24px;height:24px" viewBox="0 0 24 24">
           <path fill="#000000" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z" />
@@ -61,37 +62,50 @@
 				</svg>
 			</span>
 		</h3>
-    <div id="heute" class="list-box"></div>
-    <div id="mensaplan" class="list-box"></div>
-    <div id="busplan" class="list-box"></div>
-    <div id="morgen" class="list-box"></div>
+		<div class="layout-grid">
+			<div class="layout-container">
+    		<div id="heute" class="list-box"></div>
+			</div>
+			
+			<div class="layout-container">
+    		<div id="mensaplan" class="list-box"></div>
+			</div>
+			
+			<div class="layout-container">
+    		<div id="busplan" class="list-box"></div>
+			</div>
+			
+			<div class="layout-container">
+    		<div id="morgen" class="list-box"></div>
+			
+				<div class="list-box">
+					<a class="item-icon-wrapper" id="vorlesungsplan-link" href="http://vorlesungsplan.dhbw-mannheim.de/index.php" target="_blank">
+						<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+							<path fill="#999999" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
+						</svg></span>
+						<div>Vorlesungsplan aufrufen</div>
+					</a>
 
-		<div class="list-box">
-			<a class="item-icon-wrapper" id="vorlesungsplan-link" href="http://vorlesungsplan.dhbw-mannheim.de/index.php" target="_blank">
-				<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-					<path fill="#999999" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
-				</svg></span>
-				<div>Vorlesungsplan aufrufen</div>
-			</a>
+					<!--TESTING ONLY-->
+					<ul>
+						<li><a class="item-icon-wrapper" id="sdasdvorlesungsplan-link" href="http://vorlesungsplan.dhbw-mannheim.de/" target="_blank">
 
-			<!--TESTING ONLY-->
-			<ul>
-				<li><a class="item-icon-wrapper" id="sdasdvorlesungsplan-link" href="http://vorlesungsplan.dhbw-mannheim.de/" target="_blank">
-					
-				<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-					<path fill="#a1887f" d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z" />
-				</svg></span>
-					<div>
-				Kaffeepause
-						</div>
-			</a></li>
-				<li><span class="item-icon-wrapper">
-				<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-					<path fill="#ffd54f" d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" />
-				</svg></span>
-				<div>Flagge hissen</div>
-			</span></li>
-			</ul>
+						<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+							<path fill="#a1887f" d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z" />
+						</svg></span>
+							<div>
+						Kaffeepause
+								</div>
+					</a></li>
+						<li><span class="item-icon-wrapper">
+						<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+							<path fill="#ffd54f" d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" />
+						</svg></span>
+						<div>Flagge hissen</div>
+					</span></li>
+					</ul>
+				</div>
+			</div>
 		</div>
   </body>
 </html>
