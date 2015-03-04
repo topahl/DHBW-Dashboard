@@ -133,12 +133,12 @@ function processBus(){
   var data = datastore.bus;
 
 	chrome.storage.sync.get("stop", function(items) {
-		
+
 		var stopName = "Fahrplan";
 		if(items.hasOwnProperty("stop")) {
 			stopName = items.stop;
 		}
-		
+
 		var result = '<ul>';
 		result = result + '<li data-role="list-divider">'+stopName+'</li>';
 		for(key in data.results) {
@@ -178,6 +178,7 @@ function autofill(){
 }
 
 function changeStation(){
+  console.log("changeStation");
     var value = $("#haltestelle").val();
     var result = search(vrn,value);
     if(value === "" || (decodeHtml(result[0].hs) == value)){
@@ -257,6 +258,7 @@ function parseMensa(object){
 
 
 function changeKursID(){
+  console.log("changeKursID");
   var id = $("#kursid").val();
 
 	if(id.substring(0,4) == "http") {
@@ -265,6 +267,7 @@ function changeKursID(){
 	}
 
   chrome.storage.sync.set({"kurs": id})
+  datastore.kurs_uid = id;
   loadStaticData();
 }
 
