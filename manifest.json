@@ -1,6 +1,6 @@
 {
   "name": "DHBW Dashboard",
-  "description": "DHBW Information",
+  "description": "Dein persönlicher Tagesüberblick - Vorlesungen, Essen, Fahrplan.",
   "version": "0.22",
   "manifest_version": 2,
   "app": {
@@ -8,7 +8,7 @@
       "scripts": ["background.js"]
     }
   },
-  "icons": { "16": "dhbw-16.png", "128": "dhbw-128.png" },
+  "icons": { "16": "img/dhbw-16.png", "128": "img/dhbw-128.png" },
   "permissions": [
     "http://vorlesungsplan.dhbw-mannheim.de/index.php",
     "https://api.import.io/*",

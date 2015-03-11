@@ -17,17 +17,17 @@ function TimeTable(offset){
 
   function getOptions(){
     var result = '';
-    result = result + '<div class="content-box">';
-    result = result + '<div class="form-box swap-order">';
-    result = result + '  <input id="kursid" placeholder="Kurs ID / Vorlesungsplan URL" />';
-    result = result + '  <label for="kursid">Kurs ID</label>';
-    result = result + '</div>';
-    result = result + '<div class="form-box">';
-    result = result + '  <span class="label">Kursname</span>';
-    result = result + '  <span class="kursname input"></span>';
-    result = result + '</div>';
-    result = result + '</div>';
-    result = result + '</div>';
+    result += '<div class="content-box">';
+    result += '<div class="form-box swap-order">';
+    result += '  <input id="kursid" placeholder="Kurs ID / Vorlesungsplan URL" />';
+    result += '  <label for="kursid">Kurs ID</label>';
+    result += '</div>';
+    result += '<div class="form-box">';
+    result += '  <span class="label">Kursname</span>';
+    result += '  <span class="kursname input"></span>';
+    result += '</div>';
+    result += '</div>';
+    result += '</div>';
     return result;
   }
 
@@ -52,7 +52,7 @@ function TimeTable(offset){
             var diff = times[1]-now;
             var minutes = (diff%60);
             minutes = (minutes < 10) ?("0"+minutes):minutes;
-            result = result + '</strong><span class="color-green"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><strong>';
+            result += '</strong><span class="color-green"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><strong>';
           }
         }
       }
@@ -66,18 +66,18 @@ function TimeTable(offset){
     $(".kursname").text( (kursname.length > 0) ? kursname : "Kein Kurs eingetragen");
     var html = data.results[now.getDay()-1+offset];
     if(typeof html == "object"){
-      var result = '<div class="layout-container"><div class="list-box">';
-      result = result + '<ul>';
-      result = result + '<li data-role="list-divider">'+germanDateString(html.day)+'</li>';
+      var result = '<div class="list-box">';
+      result += '<ul>';
+      result += '<li data-role="list-divider">'+germanDateString(html.day)+'</li>';
       if(typeof html.time === 'object')
       for (var key in html.kurs_name){
-        result = result + '<li><strong>'+prepareTimeString(html.time[key],html.day)+'</strong><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
+        result += '<li><strong>'+prepareTimeString(html.time[key],html.day)+'</strong><br>'+html.kurs_name[key]+'<br>'+html.raum[key]+'</li>';
       }
       else{
-        result = result + '<li><strong>'+prepareTimeString(html.time,html.day)+'</strong><br>'+html.kurs_name+'<br>'+html.raum+'</li>';
+        result += '<li><strong>'+prepareTimeString(html.time,html.day)+'</strong><br>'+html.kurs_name+'<br>'+html.raum+'</li>';
       }
-      result = result + '</ul>';
-      result = result + '</div></div>';
+      result += '</ul>';
+      result += '</div>';
       $(object).html(result);
     }
   }
