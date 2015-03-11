@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="312.01308"
-     inkscape:cy="597.43253"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="437.0894"
+     inkscape:cy="293.3567"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -127,9 +127,9 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="C:\Users\Stephan\Desktop\dhbw-128.png"
+       inkscape:export-ydpi="180"
+       inkscape:export-xdpi="180"
+       inkscape:export-filename="C:\Users\Stephan\git\DHBWonChrome\img\dhbw-256.png"
        y="708.07648"
        x="232.85715"
        height="128"
@@ -140,9 +140,9 @@
     <g
        transform="matrix(0.46828701,0,0,0.46828701,202.86887,410.09885)"
        id="g3825"
-       inkscape:export-filename="C:\Users\Stephan\Desktop\dhbw-128.png"
-       inkscape:export-xdpi="90"
-       inkscape:export-ydpi="90">
+       inkscape:export-filename="C:\Users\Stephan\git\DHBWonChrome\img\dhbw-256.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
       <path
          style="fill:#bdbdbd;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="path3827"
@@ -162,7 +162,7 @@
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
-       inkscape:export-filename="C:\Users\Stephan\Desktop\dhbw-16.png"
+       inkscape:export-filename="C:\Users\Stephan\git\DHBWonChrome\img\dhbw-16.png"
        style="fill:#f44336;fill-opacity:1;stroke:none"
        id="rect3833"
        width="16"
@@ -171,9 +171,9 @@
        y="769.71106"
        ry="8" />
     <path
-       inkscape:export-ydpi="90"
-       inkscape:export-xdpi="90"
-       inkscape:export-filename="C:\Users\Stephan\Desktop\dhbw-16.png"
+       inkscape:export-ydpi="180"
+       inkscape:export-xdpi="180"
+       inkscape:export-filename="C:\Users\Stephan\git\DHBWonChrome\img\dhbw-32.png"
        id="path3835"
        d="m 466.625,772.41581 c -0.0354,0 -0.10246,0.009 -0.15625,0.0625 l -2.1875,2.21875 c -0.10719,0.10719 -0.1875,0.26749 -0.1875,0.375 l 0,0.25 0,4.5625 0,0.25 c 0,0.10751 0.08,0.1875 0.1875,0.1875 l 4.78125,0 c 0.10751,0 0.21875,-0.08 0.21875,-0.1875 l 0,-4.8125 c 0,-0.10751 -0.11126,-0.1875 -0.21875,-0.1875 l -2.375,0 0,-2.65625 c 0,-0.0538 -0.0271,-0.0625 -0.0625,-0.0625 z m -7.96875,2.71875 c -0.10751,0 -0.21875,0.08 -0.21875,0.1875 l 0,4.8125 c 0,0.10751 0.11126,0.1875 0.21875,0.1875 l 2.375,0 0,2.59375 c 0,0.0538 0.0276,0.0937 0.0625,0.0937 0.0349,0 0.0712,-0.0399 0.125,-0.0937 l 2.21875,-2.1875 c 0.10719,-0.10751 0.1875,-0.26749 0.1875,-0.375 l 0,-0.21875 0,-4.59375 0,-0.21875 c 0,-0.10751 -0.08,-0.1875 -0.1875,-0.1875 l -4.78125,0 z"
        style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"

@@ -1,0 +1,22 @@
+{
+  "name": "DHBW Dashboard",
+  "description": "Dein persönlicher Tagesüberblick - Vorlesungen, Essen, Fahrplan.",
+  "launch_path": "/DHBW-Dashboard/window.html",
+  "icons": {
+    "16": "/DHBW-Dashboard/img/dhbw-16.png",
+    "32": "/DHBW-Dashboard/img/dhbw-32.png",
+    "48": "/DHBW-Dashboard/img/dhbw-48.png",
+    "64": "/DHBW-Dashboard/img/dhbw-64.png",
+    "128": "/DHBW-Dashboard/img/dhbw-128.png",
+    "256": "/DHBW-Dashboard/img/dhbw-256.png"
+  },
+  "developer": {
+    "name": "Tobias Pahlings",
+    "url": "https://github.com/topahl"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "appcache_path": "cache.manifest",
+  "default_locale": "de"
+}

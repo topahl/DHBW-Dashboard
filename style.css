@@ -65,24 +65,29 @@ li[data-role="list-divider"] {
 	flex-direction: column-reverse;
 }
 
-.autofill-box{
-    left: 0px;
-    position: absolute;
-    width: 100%;
+.autofill-box {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	margin-top: -8px;
 }
 
-.autofill{
-    border-width: 1px;
-    border-top-width: 1px;
-    border-style: solid;
-    border-color: #e5e5e5;
-    margin: 0em 2em 0em 2em;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.30), 0 1px 6px rgba(0, 0, 0, 0.39);
+.autofill {
+	margin: 0 2rem;
 }
-
-#autofill_stop{
+.autofill ul li {
+	background-color: #F44336;
+	color: #fff;
+	border: 0;
+	transition: background-color .4s ease-out 0s;
+}
+.autofill ul li:hover, .autofill ul li.active {
+	background-color: #e53935;
+}
+#autofill_stop {
     display: none;
 }
+
 
 label, .label {
 	display: block;
