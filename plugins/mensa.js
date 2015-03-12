@@ -46,6 +46,9 @@ function Mensa(){
     },
     getPriority : function(){
       return 1;
+    },
+    createListener : function(){
+      //no listeners
     }
   }
 }

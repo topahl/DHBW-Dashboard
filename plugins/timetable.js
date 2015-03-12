@@ -6,7 +6,7 @@ function TimeTable(offset){
   var planData;
 
   function loadData(object){
-    var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+datastore.kurs_uid;
+    var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+persistent.get("kurs");
     var planapi_url = "https://api.import.io/store/data/"+PLAN_API+"/_query?input/webpage/url="+encodeURIComponent(planurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
     $.get(planapi_url,function(data){
       planData = data;
@@ -38,8 +38,7 @@ function TimeTable(offset){
   }
 
   function prepareTimeString(time,day){
-    datastore.now = new Date();
-    var now = datastore.now;
+    var now = new Date();
     var result = "";
     if(typeof time === "string"){
       result = time;
@@ -81,6 +80,22 @@ function TimeTable(offset){
       $(object).html(result);
     }
   }
+  function listeners(){
+    $("#kursid").on("keyup",changeKursID);
+  }
+
+  function changeKursID(){
+    console.log("changeKursID");
+    var id = $("#kursid").val();
+
+    if(id.substring(0,4) == "http") {
+      id = id.split("uid=")[1];
+      $("#kursid").val(id);
+    }
+
+    persistent.set({"kurs": id})
+    loadStaticData();
+  }
 
   return {
     setup : function(object){
@@ -94,6 +109,9 @@ function TimeTable(offset){
     },
     getPriority : function(){
       return 1;
+    },
+    createListener : function(){
+      listeners();
     }
   }
 }
