@@ -6,10 +6,11 @@ function VRN(){
   var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 
   function loadData(object){
-    var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&limit=4&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+persistent.get("stop_id"))+"&mode=direct";
+    var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&limit=4&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+Math.round(persistent.get("stop_id")))+"&mode=direct";
     var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
     $.get(busapi_url,function(data){
       busData = data;
+      console.log(busData);
       processBus(object);
     });
 

@@ -93,8 +93,8 @@ function TimeTable(offset){
       $("#kursid").val(id);
     }
 
-    persistent.set({"kurs": id})
-    loadStaticData();
+    persistent.set({"kurs": id});
+    setupPlugins();
   }
 
   return {

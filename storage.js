@@ -17,3 +17,16 @@ function StorageChrome(callback){
     }
   };
 }
+
+function StorageLocal(){
+  return{
+    get : function(object_name){
+      return localStorage.getItem(object_name);
+    },
+    set : function(object){
+      for(key in object){
+        localStorage.setItem(key,object[key]);
+      }
+    }
+  };
+}
