@@ -18,16 +18,14 @@ function Mensa(){
   function parseMensa(object){
     var day = (now.getDay()-1)*2;
     var data = mensaData;
-    var html = '<div class="layout-container" id="mensaplan">';
-    html = html + '<div class="list-box">';
-    html = html + '<ul>';
-    html = html + '<li data-role="list-divider">Mensaria Metropol</li>';
-    html = html + '<li><div class="flex-box"><div>'+data.results[day].menu_1+'</div><strong class="price">'+data.results[day+1].menu_1.replace(',','.')+'</strong></div></li>';
-    html = html + '<li><div class="flex-box"><div>'+data.results[day].menu_2+'</div><strong class="price">'+data.results[day+1].menu_2.replace(',','.')+'</strong></div></li>';
-    html = html + '<li><div class="flex-box"><div>'+data.results[day].vegetarisch+'</div><strong class="price">'+data.results[day+1].vegetarisch.replace(',','.')+'</strong></div></li>';
-    html = html + '</ul>';
-    html = html + '</div>';
-    html = html + '</div>';
+    var html = '<div id="mensaplan" class="list-box">';
+    html += '<ul>';
+    html += '<li data-role="list-divider">Mensaria Metropol</li>';
+    html += '<li><div class="flex-box"><div>'+data.results[day].menu_1+'</div><strong class="price">'+data.results[day+1].menu_1.replace(',','.')+'</strong></div></li>';
+    html += '<li><div class="flex-box"><div>'+data.results[day].menu_2+'</div><strong class="price">'+data.results[day+1].menu_2.replace(',','.')+'</strong></div></li>';
+    html += '<li><div class="flex-box"><div>'+data.results[day].vegetarisch+'</div><strong class="price">'+data.results[day+1].vegetarisch.replace(',','.')+'</strong></div></li>';
+    html += '</ul>';
+    html += '</div>';
     html = html.replace(/ *\[[^\]]*\] */g, "");
     html = html.replace(/\,/g, "<br>");
     $(object).html(html);

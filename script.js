@@ -70,7 +70,7 @@ function setupPlugins(){
   console.log("setupPlugins");
   $('#plugin-area').html('');
   for(key in plugins){
-    $('#plugin-area').append('<div id="plugin'+key+'"></div>');
+    $('#plugin-area').append('<div id="plugin'+key+'" class="layout-container"></div>');
     plugins[key].setup("#plugin"+key);
   }
 }
