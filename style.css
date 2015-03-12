@@ -251,6 +251,7 @@ a.item-icon-wrapper:hover {
 .layout-grid {
 	display: flex;
 	flex-flow: column;
+	margin-bottom: 1rem;
 }
 .hidden-small {
 	display: none;

@@ -26,14 +26,12 @@ function setup(){
 }
 
 function setupPersistent(){
-  console.log("setupPersistent");
-
-  if(typeof chrome.storage != 'undefined'){
-    console.log('Chrome Store');
+  if((typeof chrome !== 'undefined') && (typeof chrome.storage !== 'undefined')){
+    console.debug('Chrome Store');
     persistent = new StorageChrome(loadOptions);
   }
   else{
-    console.log('Local Store');
+    console.debug('Local Store');
     persistent = new StorageLocal();
     loadOptions();
   }
