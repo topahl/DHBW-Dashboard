@@ -5,23 +5,23 @@ function Linkbox() {
 	var manifest_url = location.href + 'manifest.webapp';
 	
 	function checkFirefox() {
-		console.debug(typeof navigator !== 'undefined' && typeof navigator.mozApps !== 'undefined');
 		return (typeof navigator !== 'undefined' && typeof navigator.mozApps !== 'undefined');
 	}
 	
 	function install(ev) {
 		ev.preventDefault();
+		console.debug("test");
 		//Manifest URL Definieren
 		// App Installieren
 		var installLocFind = navigator.mozApps.install(manifest_url);
 		installLocFind.onsuccess = function(data) {
 			// Wenn die App Installiert ist
-			alert('ExpenSync was successfully installed!');
+			alert('DHBW Dashboard wurde installiert!');
 		};
 		installLocFind.onerror = function() {
 			// App ist nicht Installiert
 			// installapp.error.name
-			alert(installLocFind.error.name);
+			alert('Fehler bei der Installation: \n' + installLocFind.error.name);
 		};
 	};
 	
@@ -30,19 +30,19 @@ function Linkbox() {
 		
 		if(checkFirefox()) {
 	
-			var button = document.getElementById('button-install-firefox');
+			var $button = $('#button-install-firefox');
 
 			var installCheck = navigator.mozApps.checkInstalled(manifest_url);
 
 			installCheck.onsuccess = function() {
 				if(installCheck.result) {
-					button.style.display = "none";
+					$button.hide();
 				} else {
-					button.addEventListener('click', install, false);
+					$button.on('click', function() { install(); });
 				};
 			};
 		} else {
-			button.style.display = "none";
+			$button.hide();
 		}
 	}
 	
@@ -57,16 +57,17 @@ function Linkbox() {
 					'</a></li>';
 		
 		if(checkFirefox()) {
-			html +=	'<li id="button-install-firefox"><a class="item-icon-wrapper" href="javascript: return false;" target="_blank">'+
+			html +=	'<li id="button-install-firefox" class="item-icon-wrapper link">'+
 						'<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">'+
 								'<path fill="#999999" d="M16,20H20V16H16M16,14H20V10H16M10,8H14V4H10M16,8H20V4H16M10,14H14V10H10M4,14H8V10H4M4,20H8V16H4M10,20H14V16H10M4,8H8V4H4V8Z" />'+
 						'</svg></span>'+
 						'<div>Als Firefox-App installieren</div>'+
-					'</a></li>'+
-					'</ul></div>';
+					'</li>';
 			}
+		
+		html += '</ul></div>';
 
-/*					<!--TESTING ONLY-->
+/*					<!--TODO TESTING ONLY-->
 					<ul>
 						<li><a class="item-icon-wrapper" id="vorlesungsplan-link" href="http://vorlesungsplan.dhbw-mannheim.de/" target="_blank">
 

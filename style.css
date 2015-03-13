@@ -18,14 +18,14 @@ h3 {
     font-weight: 300;
 }
 
-a {
+a, .link {
 	text-decoration: none;
 	color: #2196f3;
 	background-color: transparent;
 	outline: 0;
 	transition: color .4s ease-out 0s, background-color .4s ease-out 0s;
 }
-a:hover {
+a:hover, .link:hover {
 	color: #1565c0;
 }
 
@@ -83,6 +83,7 @@ li[data-role="list-divider"] {
 }
 .autofill ul li:hover, .autofill ul li.active {
 	background-color: #e53935;
+	cursor: pointer;
 }
 #autofill_stop {
     display: none;
@@ -202,8 +203,12 @@ li .item-icon-wrapper {
 	display: block;
 	padding: 1rem;
 }
-a.item-icon-wrapper:hover {
+.item-icon-wrapper a {
+	align-self: center;
+}
+a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 	background-color: #f5f5f5;
+	cursor: pointer;
 }
 
 
