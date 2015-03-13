@@ -97,6 +97,10 @@ function TimeTable(offset){
     setupPlugins();
   }
 
+  function optionData(){
+    $("#kursid").val(persistent.get("kurs"));
+  }
+
   return {
     setup : function(object){
       loadData(object);
@@ -112,6 +116,9 @@ function TimeTable(offset){
     },
     createListener : function(){
       listeners();
+    },
+    preloadOptions : function(){
+      optionData();
     }
   }
 }

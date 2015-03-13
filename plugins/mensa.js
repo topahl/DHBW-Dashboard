@@ -47,6 +47,9 @@ function Mensa(){
     },
     createListener : function(){
       //no listeners
+    },
+    preloadOptions : function(){
+      //no options 
     }
   }
 }

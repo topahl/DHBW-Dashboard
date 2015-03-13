@@ -6,14 +6,40 @@ function VRN(){
   var BUS_API = "81a322e8-9e2b-485f-88de-6d14a0525613";
 
   function loadData(object){
-    var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&limit=4&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+Math.round(persistent.get("stop_id")))+"&mode=direct";
+    var busurl = "http://efa9-5.vrn.de/dm_rbl/XSLT_DM_REQUEST?itdLPxx_dmlayout=vrn&itdLPxx_realtime=1&limit=10&useRealtime=1&depType=stopEvents&typeInfo_dm=stopID&nameInfo_dm="+(6000000+Math.round(persistent.get("stop_id")))+"&mode=direct";
     var busapi_url = "https://api.import.io/store/data/"+BUS_API+"/_query?input/webpage/url="+encodeURIComponent(busurl)+"&_user=e2eb28a4-f0c6-4b15-946c-4b933cd2d167&_apikey="+API_KEY;
     $.get(busapi_url,function(data){
       busData = data;
-      console.log(busData);
       processBus(object);
     });
 
+  }
+
+  function filter(items){
+    if($("#vrn_line_filter").val() === "" && $("#vrn_hs_filter").val() === ""){
+      return items;
+    }
+    var arguments = {linie:($("#vrn_line_filter").val().split(";")),direction:($("#vrn_hs_filter").val().split(";"))};
+    console.log(arguments);
+    var result = [];
+    for(key in items){
+      var hit = false;
+      for(key2 in arguments.linie ){
+        console.log(items[key].linie == arguments.linie[key2]);
+        if(items[key].linie == arguments.linie[key2]){
+          hit = true;
+        }
+      }
+      for(key2 in arguments.direction ){
+        if(items[key].direction == arguments.direction[key2]){
+          hit = true;
+        }
+      }
+      if(hit){
+        result.push(items[key])
+      }
+    }
+    return result;
   }
 
   function getOptions(){
@@ -37,10 +63,25 @@ function VRN(){
     result += '   <span class="haltestellenid input"></span>';
     result += ' </div>';
     result += '</div>';
+
+    result += '<div class="content-box">';
+    result += ' <div class="form-box swap-order">';
+    result += '   <input id="vrn_hs_filter" placeholder="Filtertexte, mit Semikolon getrennt" />';
+    result += '   <label for="vrn_hs_filter">Positiv Haltestellen Filter</label>';
+    result += ' </div>';
+    result += ' <div class="form-box swap-order">';
+    result += '   <input id="vrn_line_filter" placeholder="Filtertexte, mit Semikolon getrennt" />';
+    result += '   <label for="vrn_line_filter">Positiv Linien Filter</label>';
+    result += ' </div>';
+    result += ' <div class="form-box swap-order">';
+    result += '   <input id="vrn_limit" placeholder="Anzahl angezeigter Verbindungen" />';
+    result += '   <label for="vrn_limit">Anzeigelimit für Verbindungen</label>';
+    result += ' </div>';
+    result += '</div>';
     return result;
   }
 
-    function processBus(object){
+  function processBus(object){
     var data = busData;
     var items = persistent.get("stop");
 
@@ -48,12 +89,18 @@ function VRN(){
     if(items.hasOwnProperty("stop")) {
       stopName = items.stop;
     }
+    data.results = filter(data.results);
+    console.log(data.results);
 
     var result = '<div class="list-box" id="busplan"><ul>';
     result += '<li data-role="list-divider">'+stopName+'</li>';
-    for(key in data.results) {
+    var i = data.results.length;
+    if($('#vrn_limit').val().replace(/[^0-9]*/,"")<i && $('#vrn_limit').val().replace(/[^0-9]*/,"")!=""){
+        i = $('#vrn_limit').val().replace(/[^0-9]*/,"");
+    }
+    for(key = 0; key < i;key++){
       result += '<li><div class="item-icon-wrapper"><div class="item-icon">';
-      if(data.results[key].icon.endsWith("bus.png")) {// || data.results[key].icon.endsWith("s_bahn.png") || data.results[key].icon.endsWith("ice.png") || data.results[key].icon.endsWith("regionalbahn.png")) {
+      if(data.results[key].icon.endsWith("bus.png")) {// || data.results[key].icon.endsWith("s_bahn.png") || data.results[key].icon.endsWith("ice.png") || data.results[key].icon.endsWith("regionalbahn.png"))
         // bus icon
         result += '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,11H6V6H18M16.5,17A1.5,1.5 0 0,1 15,15.5A1.5,1.5 0 0,1 16.5,14A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 16.5,17M7.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,14A1.5,1.5 0 0,1 9,15.5A1.5,1.5 0 0,1 7.5,17M4,16C4,16.88 4.39,17.67 5,18.22V20A1,1 0 0,0 6,21H7A1,1 0 0,0 8,20V19H16V20A1,1 0 0,0 17,21H18A1,1 0 0,0 19,20V18.22C19.61,17.67 20,16.88 20,16V6C20,2.5 16.42,2 12,2C7.58,2 4,2.5 4,6V16Z" /></svg>';
       } else {
@@ -63,11 +110,10 @@ function VRN(){
       result += '</div><div class="flex-box">';
       result += '<span><strong>'+data.results[key].abfahrt+'</strong>';
       if(data.results[key].hasOwnProperty('time')) {
-
         var colorClass = 'color-red';
-        if(data.results[key].time.endsWith("nktlich"))
+        if(data.results[key].time.endsWith("nktlich")){
           colorClass = 'color-green';
-
+        }
         result += ' <span class="'+colorClass+'">'+data.results[key].time+'</span>';
       }
       result += '<br>'+data.results[key].direction+'</span>';
@@ -76,6 +122,7 @@ function VRN(){
       result += '</div></li>';
     }
     result += '</ul></div>';
+    console.log(object);
     $(object).html(result);
   }
 
@@ -128,9 +175,21 @@ function VRN(){
         }
       }
   }
+
   function listeners(){
-    $("#haltestelle").on("keyup",changeStation);
-    $(".autofill li").on("click",autofill);
+    $('#haltestelle').on('keyup',changeStation);
+    $('.autofill li').on('click',autofill);
+    $('#vrn_line_filter').on('keyup',filterChanged);
+    $('#vrn_hs_filter').on('keyup',filterChanged);
+    $('#vrn_limit').on('keyup',filterChanged);
+  }
+
+  function optionData(){
+    $("#haltestelle").val(persistent.get("stop"));
+    $(".haltestellenid").text(persistent.get("stop_id"));
+    $('#vrn_line_filter').val(persistent.get('vrn_linie'));
+    $('#vrn_hs_filter').val(persistent.get('vrn_direction'));
+    $('#vrn_limit').val(persistent.get('vrn_limit'));
   }
 
   function autofill(){
@@ -138,18 +197,23 @@ function VRN(){
     changeStation();
   }
 
+  function filterChanged(){
+    persistent.set({
+      vrn_linie:($('#vrn_line_filter').val()),
+      vrn_direction:($('#vrn_hs_filter').val()),
+      vrn_limit:($('#vrn_limit').val())
+    });
+    updatePlugins();
+  }
 
   return {
     setup : function(object){
-      console.log("setupVRN");
       this.setHtmlAt(object);
     },
     option : function(){
-      console.log("optionsVRN");
       return getOptions();
     },
     setHtmlAt : function(object){
-      console.log("reloadHTML");
       loadData(object);
     },
     getPriority : function(){
@@ -157,8 +221,10 @@ function VRN(){
     },
     createListener : function(){
       listeners();
+    },
+    preloadOptions : function(){
+      optionData();
     }
-
 
   }
 }

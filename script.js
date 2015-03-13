@@ -8,7 +8,7 @@ setInterval(updatePlugins,60000);
 var persistent;     //datastore for application data
 var plugins = [];
 var API_KEY = "g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
-
+var debug;
 
 
 
@@ -57,9 +57,9 @@ function loadOptions(){
  */
 function loadPersistentData(){
   console.log("loadPersistentData");
-  $("#kursid").val(persistent.get("kurs"));
-  $("#haltestelle").val(persistent.get("stop"));
-  $(".haltestellenid").text(persistent.get("stop_id"));
+  for(key in plugins){
+    plugins[key].preloadOptions();
+  }
   createListener();
 }
 
@@ -88,7 +88,7 @@ function updatePlugins(){
   console.log('updatePlugins');
   //set current Date and Time
   for(key in plugins){
-    plugins[key].setHtmlAt("#div-"+key);
+    plugins[key].setHtmlAt("#plugin"+key);
   }
 }
 

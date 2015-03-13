@@ -208,7 +208,7 @@ a.item-icon-wrapper:hover {
 
 
 #settingslayer {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	display: none;
