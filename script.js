@@ -58,7 +58,7 @@ function loadPersistentData(){
   $("#kursid").val(persistent.get("kurs"));
   $("#haltestelle").val(persistent.get("stop"));
   $(".haltestellenid").text(persistent.get("stop_id"));
-  createListener();
+  setupPlugins();
 }
 
 function createListener(){
@@ -70,7 +70,6 @@ function createListener(){
   for(key in plugins){
     plugins[key].createListener();
   }
-  setupPlugins();
 }
 
 function setupPlugins(){
@@ -80,6 +79,7 @@ function setupPlugins(){
     $('#plugin-area').append('<div id="plugin'+key+'" class="layout-container"></div>');
     plugins[key].setup("#plugin"+key);
   }
+	createListener();
 }
 
 function updatePlugins(){

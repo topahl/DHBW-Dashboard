@@ -2,29 +2,35 @@ plugins.push(new Linkbox());
 
 function Linkbox() {
 	
+	var manifest_url = location.href + 'manifest.webapp';
+	
+	function checkFirefox() {
+		console.debug(typeof navigator !== 'undefined' && typeof navigator.mozApps !== 'undefined');
+		return (typeof navigator !== 'undefined' && typeof navigator.mozApps !== 'undefined');
+	}
+	
+	function install(ev) {
+		ev.preventDefault();
+		//Manifest URL Definieren
+		// App Installieren
+		var installLocFind = navigator.mozApps.install(manifest_url);
+		installLocFind.onsuccess = function(data) {
+			// Wenn die App Installiert ist
+			alert('ExpenSync was successfully installed!');
+		};
+		installLocFind.onerror = function() {
+			// App ist nicht Installiert
+			// installapp.error.name
+			alert(installLocFind.error.name);
+		};
+	};
+	
+	// Firefox install button
 	function firefoxInstallButton() {
-
-		// Firefox install button
-		var button = $('#button-install-firefox');
 		
-		if(navigator && navigator.mozApps) {
-			var manifest_url = location.href + 'manifest.webapp';
-
-			function install(ev) {
-				ev.preventDefault();
-				//Manifest URL Definieren
-				// App Installieren
-				var installLocFind = navigator.mozApps.install(manifest_url);
-				installLocFind.onsuccess = function(data) {
-					// Wenn die App Installiert ist
-					expApp.alert('ExpenSync was successfully installed!');
-				};
-				installLocFind.onerror = function() {
-					// App ist nicht Installiert
-					// installapp.error.name
-					expApp.alert(installLocFind.error.name);
-				};
-			};
+		if(checkFirefox()) {
+	
+			var button = document.getElementById('button-install-firefox');
 
 			var installCheck = navigator.mozApps.checkInstalled(manifest_url);
 
@@ -48,14 +54,17 @@ function Linkbox() {
 							'<path fill="#999999" d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />'+
 						'</svg></span>'+
 						'<div>Vorlesungsplan aufrufen</div>'+
-					'</a></li>'+
-					'<li id="button-install-firefox"><a class="item-icon-wrapper" href="javascript: return false;" target="_blank">'+
+					'</a></li>';
+		
+		if(checkFirefox()) {
+			html +=	'<li id="button-install-firefox"><a class="item-icon-wrapper" href="javascript: return false;" target="_blank">'+
 						'<span class="item-icon"><svg style="width:24px;height:24px" viewBox="0 0 24 24">'+
 								'<path fill="#999999" d="M16,20H20V16H16M16,14H20V10H16M10,8H14V4H10M16,8H20V4H16M10,14H14V10H10M4,14H8V10H4M4,20H8V16H4M10,20H14V16H10M4,8H8V4H4V8Z" />'+
 						'</svg></span>'+
 						'<div>Als Firefox-App installieren</div>'+
 					'</a></li>'+
 					'</ul></div>';
+			}
 
 /*					<!--TESTING ONLY-->
 					<ul>
