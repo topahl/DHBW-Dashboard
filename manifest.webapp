@@ -1,7 +1,7 @@
 {
   "name": "DHBW Dashboard",
   "description": "Dein persönlicher Tagesüberblick - Vorlesungen, Essen, Fahrplan.",
-  "launch_path": "/DHBW-Dashboard/window.html",
+  "launch_path": "/DHBW-Dashboard/index.html",
   "icons": {
     "16": "/DHBW-Dashboard/img/dhbw-16.png",
     "32": "/DHBW-Dashboard/img/dhbw-32.png",

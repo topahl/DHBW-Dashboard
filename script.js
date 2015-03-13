@@ -8,7 +8,6 @@ setInterval(updatePlugins,60000);
 var persistent;     //datastore for application data
 var plugins = [];
 var API_KEY = "g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
-var debug;
 
 
 
@@ -26,14 +25,12 @@ function setup(){
 }
 
 function setupPersistent(){
-  console.log("setupPersistent");
-
-  if(typeof chrome.storage != 'undefined'){
-    console.log('Chrome Store');
+  if((typeof chrome !== 'undefined') && (typeof chrome.storage !== 'undefined')){
+    console.debug('Chrome Store');
     persistent = new StorageChrome(loadOptions);
   }
   else{
-    console.log('Local Store');
+    console.debug('Local Store');
     persistent = new StorageLocal();
     loadOptions();
   }
@@ -60,7 +57,7 @@ function loadPersistentData(){
   for(key in plugins){
     plugins[key].preloadOptions();
   }
-  createListener();
+  setupPlugins();
 }
 
 function createListener(){
@@ -72,7 +69,6 @@ function createListener(){
   for(key in plugins){
     plugins[key].createListener();
   }
-  setupPlugins();
 }
 
 function setupPlugins(){
@@ -82,6 +78,7 @@ function setupPlugins(){
     $('#plugin-area').append('<div id="plugin'+key+'" class="layout-container"></div>');
     plugins[key].setup("#plugin"+key);
   }
+	createListener();
 }
 
 function updatePlugins(){

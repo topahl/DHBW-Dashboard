@@ -1,12 +1,16 @@
 CACHE MANIFEST
+plugins/links.js
 plugins/mensa.js
 plugins/timetable.js
 plugins/vrn.js
 background.js
+index.html
+jquery.min.js
 script.js
+storage.js
 style.css
 visual.js
-window.html
+
 
 NETWORK:
 *
