@@ -9,6 +9,7 @@ body, html {
     background: #eee;
     font: 400 1em Roboto, "Helvetica Neue", Helvetica, Arial;
     color: #343434;
+    overflow-y: visible;
 }
 
 h3 {
@@ -269,7 +270,7 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 
 
 @media screen and (min-width: 768px) {
-	
+
 	.layout-grid {
 		flex-flow: row wrap;
 	}
@@ -284,7 +285,7 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 
 
 @media screen and (min-width: 1024px) {
-	
+
 	.layout-grid .layout-container {
 		width: 25%;
 	}
