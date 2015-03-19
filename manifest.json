@@ -1,7 +1,7 @@
 {
   "name": "DHBW Dashboard",
   "description": "Dein persönlicher Tagesüberblick - Vorlesungen, Essen, Fahrplan.",
-  "version": "0.31a",
+  "version": "0.31",
   "manifest_version": 2,
   "app": {
     "background": {

@@ -20,7 +20,7 @@ function Updater() {
       return;
     }
     var local_version = chrome.runtime.getManifest().version;
-    if(local_version != versions.results[0].version){
+    if(local_version != versions.results[0].version.replace("[ab]","")){
 
       var html ='<div class="list-box" id="updater"><ul>'+
             '<li><a class="item-icon-wrapper" id="vorlesungsplan-link" href="'+versions.results[0].download+'" target="_blank">'+
