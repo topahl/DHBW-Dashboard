@@ -136,37 +136,39 @@ function VRN(){
 
   function changeStation(){
       var value = $("#haltestelle").val();
-      var result = search(vrn,value);
-      if(value === "" || (decodeHtml(result[0].hs) == value)){
-        $("#autofill_stop").slideUp();
-        if(result.length == 1){
-          $(".haltestellenid").text(result[0].value);
-          persistent.set({"stop": decodeHtml(result[0].hs), "stop_id":result[0].value});
-          setupPlugins();
-        }
-      }
-      else{
-        if(result.length > 0){
-            $("#autofill_stop").slideDown();
-            $("#autofill_stop_1").slideDown();
-            $("#autofill_stop_1").html(result[0].hs);
-        }
-        else{
+      if(value.length > 3){
+        var result = search(vrn,value);
+        if(value === "" || (decodeHtml(result[0].hs) == value)){
           $("#autofill_stop").slideUp();
-        }
-        if(result.length > 1){
-          $("#autofill_stop_2").slideDown();
-          $("#autofill_stop_2").html(result[1].hs);
-        }
-        else{
-          $("#autofill_stop_2").slideUp();
-        }
-        if(result.length > 2){
-          $("#autofill_stop_3").slideDown();
-          $("#autofill_stop_3").html(result[2].hs);
+          if(result.length == 1){
+            $(".haltestellenid").text(result[0].value);
+            persistent.set({"stop": decodeHtml(result[0].hs), "stop_id":result[0].value});
+            setupPlugins();
+          }
         }
         else{
-          $("#autofill_stop_3").slideUp();
+          if(result.length > 0){
+              $("#autofill_stop").slideDown();
+              $("#autofill_stop_1").slideDown();
+              $("#autofill_stop_1").html(result[0].hs);
+          }
+          else{
+            $("#autofill_stop").slideUp();
+          }
+          if(result.length > 1){
+            $("#autofill_stop_2").slideDown();
+            $("#autofill_stop_2").html(result[1].hs);
+          }
+          else{
+            $("#autofill_stop_2").slideUp();
+          }
+          if(result.length > 2){
+            $("#autofill_stop_3").slideDown();
+            $("#autofill_stop_3").html(result[2].hs);
+          }
+          else{
+            $("#autofill_stop_3").slideUp();
+          }
         }
       }
   }
