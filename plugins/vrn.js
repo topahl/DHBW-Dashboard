@@ -16,20 +16,24 @@ function VRN(){
   }
 
   function filter(items){
+    console.log(items)
     if($("#vrn_line_filter").val() === "" && $("#vrn_hs_filter").val() === ""){
       return items;
     }
     var arguments = {linie:($("#vrn_line_filter").val().split(";")),direction:($("#vrn_hs_filter").val().split(";"))};
+    console.log(arguments);
     var result = [];
     for(key in items){
       var hit = false;
       for(key2 in arguments.linie ){
-        if(items[key].linie == arguments.linie[key2]){
+        if(arguments.linie[key2]!="" && items[key].linie.indexOf(arguments.linie[key2]) != -1){
           hit = true;
         }
       }
       for(key2 in arguments.direction ){
-        if(items[key].direction == arguments.direction[key2]){
+        if(arguments.direction[key2]!="" && items[key].direction.indexOf(arguments.direction[key2])!=-1){
+          console.log(arguments.direction);
+          console.log(items[key].direction);
           hit = true;
         }
       }
