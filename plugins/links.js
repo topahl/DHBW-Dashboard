@@ -41,8 +41,6 @@ function Linkbox() {
 					$button.on('click', function(e) { install(e); });
 				};
 			};
-		} else {
-			$button.hide();
 		}
 	}
 
@@ -72,21 +70,18 @@ function Linkbox() {
 
 	return {
 		setup : function(object){
-			console.log("addLinkSetup");
 			createHtml(object);
     },
     option : function(){
       return null;
     },
     setHtmlAt : function(object){
-			console.log("addLinkHTML");
       createHtml(object);
     },
     getPriority : function(){
       return 1;
     },
     createListener : function(){
-			console.log("addLinkListeners");
       firefoxInstallButton();
     },
 		preloadOptions : function(){
