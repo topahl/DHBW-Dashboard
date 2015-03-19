@@ -193,7 +193,7 @@ li .item-icon-wrapper {
 	align-content: center;
 	align-items: stretch;
 	padding: 1rem;
-	background-color: #f5f5f5;
+	background-color: rgba(245,245,245,0.5);
 	color: #999;
 	min-width: 24px;
 }
@@ -225,6 +225,7 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 }
 
 
+
 .time {
   font-style: italic;
 }
@@ -237,8 +238,9 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
     background-color: #03A9F4;
 }
 
-
-
+#updater a{
+    background-color: rgb(255,200,0);
+}
 
 .color-green {
 	color: #4caf50;
