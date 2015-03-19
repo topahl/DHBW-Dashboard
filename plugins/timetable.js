@@ -4,6 +4,7 @@ function TimeTable(offset){
   var now = new Date();
   var PLAN_API = "87d7b852-1980-4ea8-94ae-3d5d0999f987";
   var planData;
+  var prio = 2;
 
   function loadData(object){
     var planurl = "http://vorlesungsplan.dhbw-mannheim.de/index.php?action=view&uid="+persistent.get("kurs");
@@ -51,6 +52,7 @@ function TimeTable(offset){
             var diff = times[1]-now;
             var minutes = (diff%60);
             minutes = (minutes < 10) ?("0"+minutes):minutes;
+            prio=diff > 20?8:4;
             result += '</strong><span class="color-green"> noch '+(Math.floor(diff/60))+':'+minutes+'</span><strong>';
           }
         }
@@ -60,6 +62,7 @@ function TimeTable(offset){
   }
 
   function parsePlan(object){
+    prio = 2;
     var data = planData;
     var kursname = data.results[0].kurs;
     $(".kursname").text( (kursname.length > 0) ? kursname : "Kein Kurs eingetragen");
@@ -85,7 +88,6 @@ function TimeTable(offset){
   }
 
   function changeKursID(){
-    console.log("changeKursID");
     var id = $("#kursid").val();
 
     if(id.substring(0,4) == "http") {
@@ -112,7 +114,7 @@ function TimeTable(offset){
       parsePlan(object);
     },
     getPriority : function(){
-      return 1;
+      return prio;
     },
     createListener : function(){
       listeners();

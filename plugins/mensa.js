@@ -31,6 +31,15 @@ function Mensa(){
     $(object).html(html);
   }
 
+  function calcPrio(){
+    var time = new Date();
+    var st=""+time.getHours()+time.getMinutes();
+    if(st>1130&&st<1230){
+      return 10;
+    }
+    return 1;
+
+  }
 
   return {
     setup : function(object){
@@ -43,13 +52,14 @@ function Mensa(){
       parseMensa(object);
     },
     getPriority : function(){
-      return 1;
+
+      return calcPrio();
     },
     createListener : function(){
       //no listeners
     },
     preloadOptions : function(){
-      //no options 
+      //no options
     }
   }
 }

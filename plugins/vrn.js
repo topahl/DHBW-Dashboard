@@ -20,12 +20,10 @@ function VRN(){
       return items;
     }
     var arguments = {linie:($("#vrn_line_filter").val().split(";")),direction:($("#vrn_hs_filter").val().split(";"))};
-    console.log(arguments);
     var result = [];
     for(key in items){
       var hit = false;
       for(key2 in arguments.linie ){
-        console.log(items[key].linie == arguments.linie[key2]);
         if(items[key].linie == arguments.linie[key2]){
           hit = true;
         }
@@ -90,7 +88,6 @@ function VRN(){
       stopName = items.stop;
     }
     data.results = filter(data.results);
-    console.log(data.results);
 
     var result = '<div class="list-box" id="busplan"><ul>';
     result += '<li data-role="list-divider">'+stopName+'</li>';
@@ -122,7 +119,6 @@ function VRN(){
       result += '</div></li>';
     }
     result += '</ul></div>';
-    console.log(object);
     $(object).html(result);
   }
 
@@ -139,7 +135,6 @@ function VRN(){
   }
 
   function changeStation(){
-    console.log("changeStation");
       var value = $("#haltestelle").val();
       var result = search(vrn,value);
       if(value === "" || (decodeHtml(result[0].hs) == value)){
@@ -217,7 +212,7 @@ function VRN(){
       loadData(object);
     },
     getPriority : function(){
-      return 1;
+      return 5;
     },
     createListener : function(){
       listeners();

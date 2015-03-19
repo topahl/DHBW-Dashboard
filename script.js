@@ -4,7 +4,7 @@ String.prototype.endsWith = function(suffix) {
 
 
 $( document ).ready( setup );
-setInterval(updatePlugins,60000);
+setInterval(sortPlugins,60000);
 var persistent;     //datastore for application data
 var plugins = [];
 var API_KEY = "g6G47ZUDSJ%2B5CoDlh41qJCcp0B9BqU348eUpHdUveTqTrEf4n6LVTrFBpATxUOjFB1AqRd2uK%2BBL4cPJlR75fg%3D%3D";
@@ -81,13 +81,26 @@ function setupPlugins(){
 	createListener();
 }
 
+
+function sortPlugins(){
+  console.log('sortPlugins');
+  plugins.sort(function(a,b){
+      return b.getPriority()-a.getPriority();
+  });
+  updatePlugins();
+}
+
+
 function updatePlugins(){
   console.log('updatePlugins');
   //set current Date and Time
   for(key in plugins){
+    plugins[key].getPriority();
     plugins[key].setHtmlAt("#plugin"+key);
   }
 }
+
+
 
 function dockWindow(){
   console.log('dockWindow');
