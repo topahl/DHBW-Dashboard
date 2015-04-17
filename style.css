@@ -273,6 +273,9 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 	flex-flow: column;
 	margin-bottom: 1rem;
 }
+.layout-grid .layout-container {
+	width: 100%;
+}
 .hidden-small {
 	display: none;
 }
@@ -299,7 +302,7 @@ a.item-icon-wrapper:hover, .link.item-icon-wrapper:hover {
 }
 
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1150px) {
 
 	.layout-grid .layout-container {
 		width: 25%;
