@@ -9,7 +9,6 @@ function close(){
 }
 
 function ui(){
-	
 	if((typeof chrome !== 'undefined') && (typeof chrome.storage !== 'undefined')) {
 	} else {
 		// disable resize button outside chrome
@@ -17,7 +16,14 @@ function ui(){
 	}
 	
 	// masonry grid setup
-	var msnry = new Masonry( '#plugin-area', {
-		itemSelector: '.layout-container'
+	msnry = new Masonry( '#plugin-area', {
+		itemSelector: '.layout-container',
+		percentagePosition: true,
+		isInitLayout: false
 	});
+	updateUI();
+}
+
+function updateUI(){
+	msnry.layout();
 }
