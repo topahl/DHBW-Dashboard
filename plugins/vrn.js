@@ -16,12 +16,10 @@ function VRN(){
   }
 
   function filter(items){
-    console.log(items)
     if($("#vrn_line_filter").val() === "" && $("#vrn_hs_filter").val() === ""){
       return items;
     }
     var arguments = {linie:($("#vrn_line_filter").val().split(";")),direction:($("#vrn_hs_filter").val().split(";"))};
-    console.log(arguments);
     var result = [];
     for(key in items){
       var hit = false;
@@ -32,8 +30,6 @@ function VRN(){
       }
       for(key2 in arguments.direction ){
         if(arguments.direction[key2]!="" && items[key].direction.indexOf(arguments.direction[key2])!=-1){
-          console.log(arguments.direction);
-          console.log(items[key].direction);
           hit = true;
         }
       }
@@ -106,7 +102,8 @@ function VRN(){
         result += '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,11H6V6H18M16.5,17A1.5,1.5 0 0,1 15,15.5A1.5,1.5 0 0,1 16.5,14A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 16.5,17M7.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,14A1.5,1.5 0 0,1 9,15.5A1.5,1.5 0 0,1 7.5,17M4,16C4,16.88 4.39,17.67 5,18.22V20A1,1 0 0,0 6,21H7A1,1 0 0,0 8,20V19H16V20A1,1 0 0,0 17,21H18A1,1 0 0,0 19,20V18.22C19.61,17.67 20,16.88 20,16V6C20,2.5 16.42,2 12,2C7.58,2 4,2.5 4,6V16Z" /></svg>';
       } else {
         // tram icon
-        result += '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,10H6V5H18M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M4,15.5A3.5,3.5 0 0,0 7.5,19L6,20.5V21H18V20.5L16.5,19A3.5,3.5 0 0,0 20,15.5V5C20,1.5 16.42,1 12,1C7.58,1 4,1.5 4,5V15.5Z" /></svg>';
+        //result += '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M18,10H6V5H18M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M4,15.5A3.5,3.5 0 0,0 7.5,19L6,20.5V21H18V20.5L16.5,19A3.5,3.5 0 0,0 20,15.5V5C20,1.5 16.42,1 12,1C7.58,1 4,1.5 4,5V15.5Z" /></svg>';
+				result += '<svg style="width:24px;height:24px" viewBox="0 0 24 24"><path fill="#999999" d="M17,18C16.4,18 16,17.6 16,17C16,16.4 16.4,16 17,16C17.6,16 18,16.4 18,17C18,17.6 17.6,18 17,18M6.7,10.7L7,7.3C7,6.6 7.6,6 8.3,6H15.6C16.4,6 17,6.6 17,7.3L17.3,10.6C17.3,11.3 16.7,11.9 16,11.9H8C7.3,12 6.7,11.4 6.7,10.7M7,18C6.4,18 6,17.6 6,17C6,16.4 6.4,16 7,16C7.6,16 8,16.4 8,17C8,17.6 7.6,18 7,18M19,6A2,2 0 0,0 17,4H15A2,2 0 0,0 13,2H11A2,2 0 0,0 9,4H7A2,2 0 0,0 5,6L4,18A2,2 0 0,0 6,20H8L7,22H17.1L16.1,20H18A2,2 0 0,0 20,18L19,6Z" /></svg>';
       }
       result += '</div><div class="flex-box">';
       result += '<span><strong>'+data.results[key].abfahrt+'</strong>';
