@@ -22,8 +22,12 @@ function ui(){
 		isInitLayout: false
 	});
 	updateUI();
+	
+	// TODO quickfix: update UI interval. replace with update after "plugin ready feedback"
+	setInterval(function(){console.debug("update masonry timer");updateUI();}, 15000);
 }
 
 function updateUI(){
+	console.debug("update masonry");
 	msnry.layout();
 }
